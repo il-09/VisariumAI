@@ -1,0 +1,1037 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f4f8fd">
+<title>VisariumAI — интеллектуальный помощник по документам</title>
+<style>
+:root{color-scheme:light;--bg:#f4f7fc;--sidebar:#edf3fb;--panel:#fff;--panel-soft:#f7faff;--panel-alt:#edf5ff;--text:#18314c;--muted:#6e829a;--muted-2:#92a3b8;--border:#dce6f2;--border-strong:#cbd9e9;--blue:#376fb5;--blue-2:#548dd0;--blue-soft:#e6f0ff;--teal:#238e95;--green:#25816e;--green-soft:#e4f5ef;--amber:#ac7921;--amber-soft:#fff3d9;--red:#b85454;--red-soft:#ffeded;--shadow:0 14px 40px rgba(43,76,119,.08);--shadow-small:0 5px 18px rgba(43,76,119,.06);--radius:18px;--radius-sm:12px;--input:#fff;--rail:#f7faff}
+html[data-theme="dark"]{color-scheme:dark;--bg:#1c2c42;--sidebar:#1a2a40;--panel:#243750;--panel-soft:#293e59;--panel-alt:#2d4563;--text:#e3edf8;--muted:#afc2d8;--muted-2:#819bb7;--border:#394f6b;--border-strong:#49617d;--blue:#8dbdff;--blue-2:#73aaf3;--blue-soft:#304c70;--teal:#74c9ce;--green:#8ed3bf;--green-soft:#294e4c;--amber:#f0c675;--amber-soft:#51452e;--red:#f2a4a4;--red-soft:#51383f;--shadow:0 18px 46px rgba(4,15,29,.18);--shadow-small:0 5px 18px rgba(4,15,29,.14);--input:#20344b;--rail:#22364e}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}body{min-height:100vh;font-size:14px;line-height:1.45}button,input,textarea,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid color-mix(in srgb,var(--blue) 30%,transparent);outline-offset:2px}a{color:inherit;text-decoration:none}.app-shell{min-height:100vh;display:flex}.sidebar{position:fixed;inset:0 auto 0 0;width:258px;padding:23px 16px 16px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:30;transition:transform .25s ease,background .25s ease}.brand{display:flex;align-items:center;gap:11px;padding:0 8px;margin-bottom:27px}.brand-mark{height:42px;width:42px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#6aa4e3,#4778bb);color:#fff;box-shadow:0 8px 18px rgba(66,122,190,.23);flex-shrink:0}.brand-mark svg{width:25px;height:25px}.brand-name{font-size:14px;line-height:1.25;font-weight:800;letter-spacing:-.25px}.brand-sub{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-top:3px;font-weight:700}.new-chat{height:43px;width:100%;display:flex;align-items:center;gap:10px;border:1px solid var(--border-strong);background:var(--panel);color:var(--text);border-radius:12px;padding:0 13px;font-weight:650;box-shadow:var(--shadow-small);transition:.15s}.new-chat:hover{border-color:var(--blue);transform:translateY(-1px)}.new-chat .plus{color:var(--blue);font-size:21px;font-weight:400;line-height:1}.nav-label{margin:26px 10px 9px;font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted-2);font-weight:800}.nav-group{display:flex;flex-direction:column;gap:4px}.nav-item{border:0;background:transparent;color:var(--muted);display:flex;align-items:center;gap:12px;width:100%;text-align:left;border-radius:11px;padding:11px 12px;font-size:13px;font-weight:600;transition:background .15s,color .15s}.nav-item svg{width:18px;height:18px;stroke-width:1.8;flex-shrink:0}.nav-item:hover{background:color-mix(in srgb,var(--blue-soft) 68%,transparent);color:var(--text)}.nav-item.active{background:var(--blue-soft);color:var(--blue);box-shadow:inset 3px 0 0 var(--blue)}.nav-item .nav-count{margin-left:auto;color:var(--muted-2);font-size:11px;font-weight:700}.sidebar-spacer{flex:1}.knowledge-mini{padding:13px;border:1px solid var(--border);background:var(--panel);border-radius:15px;margin:12px 3px 15px}.mini-top{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:750}.status-dot{height:8px;width:8px;border-radius:50%;background:#54b89a;box-shadow:0 0 0 4px color-mix(in srgb,#54b89a 14%,transparent)}.mini-copy{margin:8px 0 10px;color:var(--muted);font-size:11px;line-height:1.55}.mini-link{border:0;background:transparent;color:var(--blue);font-size:11px;padding:0;font-weight:750;display:flex;align-items:center;gap:5px}.profile{display:flex;align-items:center;gap:10px;padding:12px 8px 0;border-top:1px solid var(--border)}.avatar{height:34px;width:34px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,#d7eaff,#b6d2f0);color:#2b5c94;font-size:11px;font-weight:850;flex-shrink:0}.profile-name{font-size:12px;font-weight:750}.profile-role{color:var(--muted);font-size:10px;margin-top:2px}.profile-menu{margin-left:auto;background:transparent;border:0;color:var(--muted);padding:4px}.app-main{margin-left:258px;width:calc(100% - 258px);min-height:100vh;display:flex;flex-direction:column}.topbar{height:70px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:color-mix(in srgb,var(--bg) 85%,transparent);gap:20px;position:sticky;top:0;z-index:20;backdrop-filter:blur(14px)}.topbar-left,.topbar-right{display:flex;align-items:center;gap:14px;min-width:0}.mobile-menu{display:none;border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:10px;height:38px;width:38px;place-items:center}.breadcrumbs{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px;white-space:nowrap}.breadcrumbs svg{height:13px;width:13px}.breadcrumbs b{color:var(--text);font-weight:750}.top-status{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);background:var(--panel);border-radius:99px;padding:7px 10px;font-size:11px;color:var(--muted);font-weight:650;white-space:nowrap}.top-status .status-dot{height:6px;width:6px;box-shadow:none}.theme-toggle{display:flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid var(--border-strong);background:var(--panel);color:var(--text);border-radius:10px;font-size:11px;font-weight:750;white-space:nowrap;transition:.16s}.theme-toggle:hover{border-color:var(--blue)}.theme-toggle svg{width:16px;height:16px;color:var(--blue)}.top-divider{height:28px;width:1px;background:var(--border)}.top-avatar{height:33px;width:33px;border-radius:11px;background:var(--panel-alt);color:var(--blue);display:grid;place-items:center;font-size:11px;font-weight:850}.workspace{padding:26px 30px 30px;max-width:1700px;width:100%;margin:0 auto;flex:1}.content-grid{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:23px;align-items:start}.conversation-column{min-width:0;max-width:1010px;margin:0 auto;width:100%}.page-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin:4px 0 22px}.eyebrow{font-size:10px;letter-spacing:1.35px;color:var(--blue);font-weight:850;text-transform:uppercase;margin-bottom:8px}.page-heading h1{font-size:25px;letter-spacing:-.7px;line-height:1.2;margin:0;font-weight:800}.page-heading p{margin:8px 0 0;color:var(--muted);font-size:13px;max-width:650px;line-height:1.6}.soft-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--panel);color:var(--muted);padding:7px 10px;border-radius:99px;font-size:10px;font-weight:750;white-space:nowrap}.soft-badge svg{width:13px;height:13px;color:var(--blue)}.assistant-mark{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;color:white;background:linear-gradient(140deg,#79afe9,#4e7fc2);box-shadow:0 10px 25px rgba(75,127,193,.2);margin:0 auto 20px}.assistant-mark svg{width:29px;height:29px}.welcome-block{text-align:center;padding:42px 18px 26px;max-width:780px;margin:0 auto}.welcome-block h2{font-size:28px;letter-spacing:-.8px;line-height:1.28;margin:0 0 12px;font-weight:800}.welcome-block p{margin:0 auto;max-width:520px;color:var(--muted);font-size:13px;line-height:1.65}.quick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:26px auto 24px;max-width:800px;text-align:left}.quick-card{position:relative;min-height:127px;border:1px solid var(--border);background:var(--panel);border-radius:16px;padding:16px;text-align:left;color:var(--text);box-shadow:var(--shadow-small);transition:transform .17s,border-color .17s,box-shadow .17s;display:flex;flex-direction:column;align-items:flex-start}.quick-card:hover{transform:translateY(-3px);border-color:var(--blue-2);box-shadow:var(--shadow)}.quick-icon{width:35px;height:35px;display:grid;place-items:center;border-radius:11px;background:var(--blue-soft);color:var(--blue);margin-bottom:12px}.quick-icon svg{height:18px;width:18px}.quick-card strong{font-size:12px;font-weight:800;margin-bottom:5px}.quick-card span.desc{font-size:11px;color:var(--muted);line-height:1.5}.quick-arrow{position:absolute;right:14px;top:15px;color:var(--muted-2)}.quick-arrow svg{height:14px;width:14px}.chat-stream{display:flex;flex-direction:column;gap:18px;padding:8px 8px 18px;min-height:0}.chat-message{display:flex;gap:11px;align-items:flex-start;max-width:900px}.chat-message.user{flex-direction:row-reverse;align-self:flex-end}.msg-avatar{height:31px;width:31px;border-radius:11px;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center;flex-shrink:0}.msg-avatar svg{height:17px;width:17px}.chat-message.user .msg-avatar{background:var(--panel-alt);color:var(--muted)}.message-body{min-width:0;max-width:calc(100% - 42px)}.message-name{font-size:10px;color:var(--muted);font-weight:750;margin:1px 0 6px}.chat-message.user .message-name{text-align:right}.message-bubble{background:var(--panel);border:1px solid var(--border);border-radius:4px 15px 15px 15px;padding:14px 16px;box-shadow:var(--shadow-small);font-size:13px;line-height:1.7;white-space:normal}.chat-message.user .message-bubble{border-radius:15px 4px 15px 15px;background:var(--blue-soft);border-color:color-mix(in srgb,var(--blue) 15%,var(--border))}.message-bubble p{margin:0 0 8px}.message-bubble p:last-child{margin-bottom:0}.message-bubble ul{margin:8px 0;padding-left:19px}.message-bubble li{margin:4px 0}.citation-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.citation{display:inline-flex;align-items:center;gap:6px;background:var(--panel-soft);border:1px solid var(--border);border-radius:8px;padding:6px 9px;font-size:10px;color:var(--muted);font-weight:650}.citation svg{height:13px;width:13px;color:var(--blue)}.message-actions{display:flex;gap:8px;margin:9px 0 0}.text-action{border:0;background:transparent;color:var(--blue);font-size:10px;font-weight:750;padding:3px}.chat-composer{position:relative;border:1px solid var(--border-strong);border-radius:18px;background:var(--panel);box-shadow:0 8px 25px rgba(44,78,121,.07);padding:13px 14px 10px;margin:0 auto;width:100%;max-width:820px;transition:border-color .15s}.chat-composer:focus-within{border-color:var(--blue-2);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 10%,transparent),0 8px 25px rgba(44,78,121,.07)}.composer-form{display:flex;flex-direction:column;gap:11px}.composer-form textarea{width:100%;height:48px;resize:vertical;min-height:48px;max-height:130px;background:transparent;color:var(--text);border:0;outline:none;padding:2px 3px;font-size:13px;line-height:1.6}.composer-form textarea::placeholder{color:var(--muted-2)}.composer-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px}.composer-tools{display:flex;align-items:center;gap:7px}.composer-tool{border:1px solid var(--border);background:var(--panel-soft);color:var(--muted);padding:6px 9px;border-radius:9px;display:flex;align-items:center;gap:6px;font-size:10px;font-weight:700}.composer-tool svg{width:14px;height:14px}.send-button{border:0;height:36px;width:39px;border-radius:11px;background:var(--blue);color:#fff;display:grid;place-items:center;transition:opacity .15s,transform .15s}.send-button:hover{transform:translateY(-1px);opacity:.92}.send-button svg{height:17px;width:17px}.disclaimer{text-align:center;color:var(--muted-2);font-size:10px;margin:12px auto 0;line-height:1.5}.right-rail{display:flex;flex-direction:column;gap:14px;padding-top:8px}.rail-card{border:1px solid var(--border);border-radius:16px;background:var(--rail);padding:15px}.rail-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:13px}.rail-title{font-size:12px;font-weight:800;letter-spacing:-.1px}.rail-head-icon{width:29px;height:29px;border-radius:10px;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center}.rail-head-icon svg{height:15px;width:15px}.rail-action{width:100%;display:flex;align-items:center;gap:10px;border:0;background:transparent;padding:9px 4px;text-align:left;color:var(--text);border-radius:9px}.rail-action:hover{background:var(--panel-alt)}.rail-action .quick-icon{width:31px;height:31px;margin:0;border-radius:9px;flex-shrink:0}.rail-action .quick-icon svg{height:16px;width:16px}.rail-action strong{display:block;font-size:11px;font-weight:750}.rail-action small{display:block;font-size:10px;color:var(--muted);margin-top:3px}.rail-action>svg{margin-left:auto;width:14px;height:14px;color:var(--muted-2);flex-shrink:0}.source-mini{display:flex;gap:9px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border)}.source-mini:last-of-type{border-bottom:0}.doc-icon{height:31px;width:29px;border-radius:8px;border:1px solid var(--border);background:var(--panel);color:var(--blue);display:grid;place-items:center;flex-shrink:0}.doc-icon svg{width:15px;height:15px}.source-title{font-size:10px;font-weight:750;line-height:1.45}.source-sub{font-size:9px;color:var(--muted);margin-top:3px;line-height:1.4}.rail-foot{border:0;background:transparent;padding:10px 0 0;display:flex;align-items:center;gap:6px;font-size:10px;font-weight:750;color:var(--blue)}.rail-foot svg{width:13px;height:13px}.callout{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid color-mix(in srgb,var(--blue) 20%,var(--border));border-radius:12px;background:var(--blue-soft);color:var(--text);font-size:10px;line-height:1.55}.callout svg{height:16px;width:16px;color:var(--blue);flex-shrink:0}.callout b{font-size:10px}.page-wrap{max-width:1160px;margin:0 auto}.page-panel{border:1px solid var(--border);background:var(--panel);border-radius:18px;padding:22px;box-shadow:var(--shadow-small)}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:2px 0 16px}.section-head h2{font-size:15px;margin:0;font-weight:800;letter-spacing:-.2px}.section-head p{font-size:11px;color:var(--muted);margin:5px 0 0}.template-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.template-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;min-height:178px;border:1px solid var(--border);background:var(--panel);border-radius:15px;padding:17px;color:var(--text);transition:all .18s}.template-card:hover{border-color:var(--blue-2);transform:translateY(-2px);box-shadow:var(--shadow-small)}.template-card .quick-icon{margin-bottom:14px}.template-card h3{font-size:13px;line-height:1.4;margin:0 0 7px;font-weight:800}.template-card p{margin:0 0 14px;color:var(--muted);font-size:11px;line-height:1.55;flex:1}.template-foot{display:flex;justify-content:space-between;align-items:center;width:100%;padding-top:12px;border-top:1px solid var(--border);font-size:10px;color:var(--blue);font-weight:750}.template-foot svg{height:14px;width:14px}.tag-row{display:flex;flex-wrap:wrap;gap:7px}.tag{border:1px solid var(--border);background:var(--panel-soft);color:var(--muted);padding:5px 8px;border-radius:7px;font-size:10px;font-weight:700}.form-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:18px;align-items:start}.form-panel{border:1px solid var(--border);background:var(--panel);border-radius:16px;padding:20px}.form-panel h3{margin:0 0 5px;font-size:15px;font-weight:800}.form-panel .intro{color:var(--muted);font-size:11px;line-height:1.55;margin:0 0 20px}.form-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:11px;font-weight:750;color:var(--text)}.required{color:var(--red)}.field input,.field textarea,.field select{width:100%;padding:10px 11px;border:1px solid var(--border-strong);border-radius:10px;background:var(--input);color:var(--text);outline:none;font-size:12px;transition:border-color .15s}.field textarea{min-height:78px;resize:vertical;line-height:1.5}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--blue-2)}.field input::placeholder,.field textarea::placeholder{color:var(--muted-2)}.field-help{font-size:10px;color:var(--muted-2);line-height:1.4}.form-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:19px;padding-top:16px;border-top:1px solid var(--border)}.button-primary,.button-secondary,.button-quiet{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:10px 13px;border:1px solid transparent;font-size:11px;font-weight:800;transition:.15s}.button-primary{background:var(--blue);color:#fff}.button-primary:hover{opacity:.9;transform:translateY(-1px)}.button-secondary{border-color:var(--border-strong);background:var(--panel);color:var(--text)}.button-secondary:hover{border-color:var(--blue)}.button-quiet{background:transparent;color:var(--blue);padding:8px}.button-primary svg,.button-secondary svg,.button-quiet svg{height:15px;width:15px}.preview-card{border:1px solid var(--border);background:var(--panel-soft);border-radius:16px;padding:19px;position:sticky;top:91px}.preview-card h3{font-size:14px;margin:0 0 7px;font-weight:800}.preview-card>p{font-size:11px;color:var(--muted);line-height:1.55;margin:0 0 17px}.preview-status{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:750;margin-bottom:15px;color:var(--amber)}.preview-status span{height:7px;width:7px;border-radius:50%;background:currentColor}.preview-list{display:flex;flex-direction:column;gap:10px}.preview-item{display:flex;align-items:flex-start;gap:9px;font-size:11px;color:var(--muted);line-height:1.5}.preview-item svg{width:15px;height:15px;color:var(--green);flex-shrink:0;margin-top:1px}.preview-rule{border-top:1px solid var(--border);margin-top:17px;padding-top:14px}.preview-rule b{font-size:11px;display:block;margin-bottom:5px}.preview-rule p{font-size:10px;line-height:1.6;margin:0;color:var(--muted)}.result-card{margin-top:18px;border:1px solid var(--border);background:var(--panel);border-radius:16px;padding:20px}.result-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.result-head h3{font-size:14px;margin:0}.result-content{padding:18px;border:1px solid var(--border);border-radius:12px;background:var(--panel-soft);white-space:pre-wrap;font-size:12px;line-height:1.8;max-height:520px;overflow:auto}.dropzone{position:relative;border:1.5px dashed var(--border-strong);background:var(--panel-soft);border-radius:16px;min-height:196px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px;transition:border-color .15s,background .15s}.dropzone.dragover{border-color:var(--blue);background:var(--blue-soft)}.dropzone .upload-icon{height:50px;width:50px;border:1px solid var(--border);border-radius:15px;background:var(--panel);display:grid;place-items:center;color:var(--blue);margin-bottom:12px}.dropzone .upload-icon svg{height:24px;width:24px}.dropzone h3{font-size:14px;margin:0 0 6px}.dropzone p{color:var(--muted);font-size:11px;max-width:420px;line-height:1.6;margin:0 0 13px}.dropzone input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}.file-pill{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid var(--border);border-radius:11px;background:var(--panel);margin-top:14px}.file-pill .doc-icon{height:36px;width:33px}.file-pill strong{display:block;font-size:11px}.file-pill small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.file-pill button{margin-left:auto;border:0;background:transparent;color:var(--muted);padding:5px}.checker-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}.checker-note{font-size:10px;color:var(--muted);display:flex;align-items:flex-start;gap:7px;line-height:1.5}.checker-note svg{width:14px;height:14px;flex-shrink:0;color:var(--blue)}.finding-list{display:flex;flex-direction:column;gap:11px}.finding{display:flex;align-items:flex-start;gap:12px;border:1px solid var(--border);border-radius:12px;padding:13px;background:var(--panel)}.finding-mark{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;flex-shrink:0}.finding-mark svg{height:16px;width:16px}.finding-mark.warning{background:var(--amber-soft);color:var(--amber)}.finding-mark.error{background:var(--red-soft);color:var(--red)}.finding-mark.info{background:var(--blue-soft);color:var(--blue)}.finding-content{flex:1}.finding-title{font-size:12px;font-weight:800;margin:0 0 5px}.finding-content p{font-size:11px;color:var(--muted);line-height:1.55;margin:0}.finding-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.finding-meta span{font-size:9px;border:1px solid var(--border);border-radius:6px;padding:4px 6px;color:var(--muted)}.finding-status{font-size:10px;font-weight:800;margin-left:10px;color:var(--amber);white-space:nowrap}.search-line{display:flex;align-items:center;gap:9px;border:1px solid var(--border-strong);border-radius:12px;background:var(--panel);padding:0 13px;height:43px;width:min(100%,460px)}.search-line svg{height:17px;width:17px;color:var(--muted)}.search-line input{border:0;outline:none;background:transparent;color:var(--text);width:100%;font-size:12px}.source-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.source-card{display:flex;gap:13px;border:1px solid var(--border);border-radius:15px;background:var(--panel);padding:16px;transition:border-color .15s}.source-card:hover{border-color:var(--blue-2)}.source-card .doc-icon{height:41px;width:37px;border-radius:11px}.source-card .doc-icon svg{width:19px;height:19px}.source-card-body{min-width:0;flex:1}.source-card h3{font-size:12px;line-height:1.45;margin:0 0 7px;font-weight:800}.source-card p{font-size:10px;color:var(--muted);line-height:1.6;margin:0 0 10px}.source-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.source-status{display:inline-flex;align-items:center;gap:5px;font-size:9px;color:var(--muted);font-weight:700}.source-status i{display:block;width:6px;height:6px;border-radius:50%;background:var(--amber)}.source-open{border:0;background:transparent;color:var(--blue);font-size:10px;font-weight:800;display:inline-flex;gap:5px;align-items:center;padding:4px}.source-open svg{height:12px;width:12px}.history-list{display:flex;flex-direction:column}.history-row{display:flex;align-items:center;gap:12px;padding:14px 2px;border-bottom:1px solid var(--border)}.history-row:last-child{border-bottom:0}.history-icon{height:36px;width:36px;border-radius:11px;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center;flex-shrink:0}.history-icon svg{height:17px;width:17px}.history-main{flex:1;min-width:0}.history-main strong{font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.history-main small{font-size:10px;color:var(--muted);display:block;margin-top:4px}.history-row button{border:1px solid var(--border);background:var(--panel);color:var(--blue);border-radius:9px;padding:7px 9px;font-size:10px;font-weight:750}.empty-state{padding:36px 20px;text-align:center;color:var(--muted)}.empty-state .quick-icon{margin:0 auto 12px}.empty-state b{display:block;color:var(--text);font-size:13px;margin-bottom:6px}.empty-state p{margin:0;font-size:11px;line-height:1.6}.toast{position:fixed;bottom:22px;right:24px;z-index:1000;background:var(--text);color:var(--bg);padding:12px 16px;border-radius:12px;box-shadow:var(--shadow);font-size:12px;font-weight:700;opacity:0;transform:translateY(10px);pointer-events:none;transition:.22s;max-width:min(90vw,460px)}.toast.show{opacity:1;transform:translateY(0)}.modal-backdrop{position:fixed;inset:0;background:rgba(24,42,65,.38);display:grid;place-items:center;z-index:100;padding:20px;backdrop-filter:blur(4px)}.modal{width:min(100%,520px);border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:19px;padding:23px;box-shadow:0 24px 65px rgba(15,33,58,.24);animation:pop .16s ease-out}.modal-top{display:flex;align-items:flex-start;gap:14px}.modal-top .quick-icon{margin:0;flex-shrink:0}.modal-top h2{font-size:18px;letter-spacing:-.4px;margin:0 0 6px}.modal-top p{font-size:11px;color:var(--muted);margin:0;line-height:1.55}.modal-close{margin-left:auto;border:1px solid var(--border);background:var(--panel-soft);color:var(--muted);border-radius:9px;height:30px;width:30px;display:grid;place-items:center;flex-shrink:0}.modal-close svg{height:15px;width:15px}.modal-content{font-size:12px;color:var(--muted);line-height:1.7;margin:18px 0}.modal-actions{display:flex;justify-content:flex-end;gap:8px;padding-top:15px;border-top:1px solid var(--border)}@keyframes pop{from{opacity:0;transform:translateY(4px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}.kbd{font-size:9px;border:1px solid var(--border);padding:2px 5px;border-radius:5px;color:var(--muted-2)}.hidden{display:none!important}
+@media(max-width:1180px){.content-grid{grid-template-columns:minmax(0,1fr)}.right-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));padding-top:0}.right-rail .rail-card:last-child{display:none}.conversation-column{max-width:960px}.workspace{padding:23px 24px}.topbar{padding:0 24px}}
+@media(max-width:850px){.sidebar{transform:translateX(-100%);box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}.app-main{margin-left:0;width:100%}.mobile-menu{display:grid}.topbar{padding:0 16px;height:62px}.workspace{padding:20px 16px}.top-status{display:none}.right-rail{grid-template-columns:1fr}.right-rail .rail-card:last-child{display:block}.form-layout{grid-template-columns:1fr}.preview-card{position:static}.template-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.page-heading h1{font-size:23px}.topbar-right{gap:8px}}
+@media(max-width:580px){.topbar{gap:8px}.breadcrumbs{font-size:11px}.breadcrumbs span:first-child{display:none}.theme-toggle{padding:7px 8px;gap:5px}.theme-toggle .theme-label{display:none}.top-divider{display:none}.top-avatar{display:none}.workspace{padding:16px 12px 24px}.page-heading{display:block}.page-heading .soft-badge{margin-top:13px}.page-heading h1{font-size:22px}.welcome-block{padding:24px 3px 13px}.welcome-block h2{font-size:24px}.welcome-block p{font-size:12px}.quick-grid{grid-template-columns:1fr;gap:9px;margin:20px auto}.quick-card{min-height:0;display:grid;grid-template-columns:39px minmax(0,1fr);column-gap:11px;padding:12px;align-items:center}.quick-card .quick-icon{grid-row:span 2;margin:0;width:37px;height:37px}.quick-card strong{margin-bottom:2px}.quick-card .desc{grid-column:2}.quick-arrow{top:12px;right:11px}.chat-composer{padding:10px;border-radius:14px}.composer-tool{font-size:0;gap:0;padding:7px}.composer-tool svg{width:15px;height:15px}.chat-stream{padding:6px 0 14px}.message-bubble{font-size:12px;padding:12px}.template-grid,.source-grid{grid-template-columns:1fr}.template-card{min-height:145px}.page-panel{padding:15px}.form-panel,.preview-card{padding:15px}.form-fields{grid-template-columns:1fr}.field.full{grid-column:auto}.section-head{align-items:flex-start;flex-direction:column}.search-line{width:100%}.checker-controls{align-items:flex-start;flex-direction:column}.finding-status{display:none}.result-head{align-items:flex-start;flex-direction:column}.history-row button{font-size:0}.history-row button svg{width:14px;height:14px}.toast{right:12px;bottom:12px}.modal{padding:18px}.source-card{padding:13px}}
+
+/* Minimal workspace refinement */
+.sidebar{width:252px;padding:15px 10px 12px;overflow-x:hidden;transition:width .2s ease,padding .2s ease,background .25s ease}
+.sidebar.collapsed{width:76px;padding:15px 8px 12px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:7px;padding:0 4px;margin-bottom:18px;min-height:40px}
+.brand-mark{width:38px;height:38px;min-width:38px;border-radius:12px;box-shadow:none}
+.brand-mark svg{width:24px;height:24px}
+.sidebar-toggle{display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--border);background:var(--panel);color:var(--muted);border-radius:9px;flex-shrink:0}
+.sidebar-toggle svg{width:16px;height:16px;transition:transform .18s ease}
+.sidebar.collapsed .brand{justify-content:center;gap:5px;padding:0}
+.sidebar.collapsed .brand-mark{width:38px}
+.sidebar.collapsed .sidebar-toggle{width:20px;height:26px;padding:0;border-color:transparent;background:transparent}
+.sidebar.collapsed .sidebar-toggle svg{transform:rotate(0deg)}
+.sidebar:not(.collapsed) .sidebar-toggle svg{transform:rotate(180deg)}
+.sidebar .brand-name,.sidebar .brand-sub,.sidebar .kbd,.sidebar .knowledge-mini{display:none!important}
+.new-chat{height:41px;min-height:41px;box-shadow:none;justify-content:flex-start;gap:9px;padding:0 11px;white-space:nowrap}
+.new-chat .plus{font-size:20px}
+.sidebar.collapsed .new-chat{width:42px;padding:0;justify-content:center;margin:0 auto}
+.sidebar.collapsed .new-chat-label,.sidebar.collapsed .nav-label,.sidebar.collapsed .nav-item span,.sidebar.collapsed .profile-copy{display:none!important}
+.nav-label{margin:18px 10px 8px;font-size:11px;letter-spacing:0;text-transform:none;color:var(--muted);font-weight:700;white-space:nowrap}
+.nav-group{gap:3px}
+.nav-item{height:42px;min-height:42px;padding:0 11px;border-radius:10px;gap:12px;font-size:13px;white-space:nowrap}
+.nav-item svg{width:19px;height:19px}
+.sidebar.collapsed .nav-item{width:44px;padding:0;justify-content:center;margin:0 auto}
+.nav-item .nav-count{display:none!important}.nav-item[hidden]{display:none!important}
+.profile{padding:11px 2px 0;gap:8px}
+.profile .avatar{height:34px;width:34px;min-width:34px;border-radius:11px}
+.profile-name{font-size:12px}.profile-role{font-size:10px}
+.profile-menu{margin-left:auto;display:grid;place-items:center;min-width:28px;height:28px;border-radius:8px}
+.sidebar.collapsed .profile{justify-content:center;gap:3px}
+.sidebar.collapsed .profile-menu{margin:0;width:26px;min-width:26px;padding:0}
+.app-main{margin-left:76px;width:calc(100% - 76px);transition:margin-left .2s ease,width .2s ease}
+body:has(.sidebar:not(.collapsed)) .app-main{margin-left:252px;width:calc(100% - 252px)}
+.topbar{height:54px;min-height:54px;padding:0 22px;border-bottom:1px solid var(--border);background:var(--bg);backdrop-filter:none}
+.topbar-left{gap:0}.topbar-right{gap:0}
+.mobile-menu{height:34px;width:34px;border:0;background:transparent}
+.theme-toggle.icon-only{width:34px;height:34px;padding:0;display:grid;place-items:center;border:1px solid var(--border);border-radius:11px;box-shadow:none;background:var(--panel)}
+.theme-toggle.icon-only svg{width:17px;height:17px}
+.workspace{padding:25px clamp(16px,3vw,36px) 32px;max-width:1600px}
+.content-grid{grid-template-columns:minmax(0,1fr) 190px;gap:18px}
+.conversation-column{max-width:880px;display:flex;flex-direction:column;min-height:calc(100vh - 110px)}
+.page-heading{margin:0 0 17px;align-items:center}
+.page-heading h1{font-size:23px;letter-spacing:-.55px;margin:0}
+.page-heading p,.page-heading .eyebrow{display:none!important}
+.welcome-block{padding:54px 10px 18px;max-width:760px}
+.welcome-block h2{font-size:27px;line-height:1.2;letter-spacing:-.7px;margin:0;font-weight:750}
+.welcome-block p,.assistant-mark{display:none!important}
+.mode-switcher{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:19px;flex-wrap:wrap}
+.mode-chip{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:34px;border:1px solid var(--border);border-radius:10px;background:transparent;color:var(--muted);padding:6px 10px;font-size:12px;font-weight:650;transition:.15s}
+.mode-chip svg{height:15px;width:15px;color:var(--blue)}
+.mode-chip:hover{background:var(--panel);border-color:var(--blue-2);color:var(--text)}
+.quick-grid{display:none!important}
+.chat-stream{flex:1;gap:16px;padding:10px 4px 20px}
+.message-name{display:none!important}
+.message-bubble{box-shadow:none;font-size:14px;padding:13px 15px}
+.chat-composer{margin-top:auto;box-shadow:0 8px 28px color-mix(in srgb,var(--blue) 7%,transparent);border:1px solid var(--border-strong);border-radius:18px;background:var(--panel)}
+.composer-form{border:0;box-shadow:none;border-radius:18px;padding:15px 16px 11px}
+.composer-form textarea{font-size:15px;min-height:37px}
+.composer-bottom{margin-top:8px}
+.disclaimer{display:none!important}
+.right-rail{display:flex;flex-direction:column;gap:8px;padding-top:0;position:sticky;top:70px}
+.rail-card{padding:0;border:0;box-shadow:none;background:transparent}
+.rail-card .rail-head,.rail-card>.rail-action,.rail-card .source-mini,.rail-card .rail-foot,.right-rail>.callout{display:none!important}
+.rail-disclosure{border:1px solid var(--border);background:var(--panel);border-radius:12px;overflow:hidden}
+.rail-disclosure summary{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;min-height:40px;padding:9px 10px;font-size:12px;font-weight:700;color:var(--text)}
+.rail-disclosure summary::-webkit-details-marker{display:none}
+.rail-disclosure summary::after{content:'+';margin-left:auto;font-size:18px;color:var(--muted);font-weight:400}
+.rail-disclosure[open] summary::after{content:'−'}
+.rail-disclosure summary svg{width:16px;height:16px;color:var(--blue)}
+.rail-disclosure-body{padding:3px 7px 8px;border-top:1px solid var(--border)}
+.rail-action{min-height:34px;padding:6px 5px;border:0;background:transparent;box-shadow:none;border-radius:7px}
+.rail-action .quick-icon{width:27px;height:27px;min-width:27px;margin:0;border-radius:8px}
+.rail-action strong{font-size:11px}
+.rail-action>svg{width:13px;height:13px}
+.source-jump{width:100%;border:0;background:transparent;text-align:left;cursor:pointer}
+.source-jump:hover{background:var(--panel-alt)}
+.page-panel,.form-panel,.result-card{box-shadow:none;border-radius:15px}
+.page-panel{padding:21px}
+.section-head{margin-bottom:13px;align-items:center}
+.section-head h2{font-size:15px;margin:0}
+.section-head p{display:none!important}
+.template-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.template-card{min-height:102px;padding:14px;border-radius:13px;box-shadow:none}
+.template-card .quick-icon{width:30px;height:30px;margin-bottom:10px}
+.template-card h3{font-size:13px;margin:0 0 8px}
+.template-card p{display:none!important}
+.template-foot{font-size:11px;padding-top:8px;margin-top:auto}
+.callout,.checker-note,.preview-card,.preview-status,.preview-rule,.intro,.field-help{display:none!important}
+.form-layout.single{grid-template-columns:minmax(0,1fr);max-width:900px}
+.form-panel{padding:20px}
+.form-fields{gap:14px}
+.form-fields .field label{font-size:12px;margin-bottom:5px}
+.form-fields .field input,.form-fields .field textarea,.field select{min-height:40px;padding:9px 11px;font-size:13px}
+.form-fields .field textarea{min-height:76px}
+.result-card{margin-top:18px;padding:17px}
+.result-head{align-items:center;gap:12px}
+.result-head h3{font-size:15px;margin:0}
+.result-content{font-size:13px;line-height:1.7;white-space:pre-wrap}
+.upload-icon{display:none!important}
+.dropzone{padding:30px 15px;border-radius:13px}
+.dropzone h3{font-size:14px;margin:0 0 12px}
+.dropzone p{display:none!important}
+.checker-controls{border:0;padding:13px 0 0;margin-top:12px}
+.finding{box-shadow:none;border-radius:11px;padding:13px}
+.finding p{font-size:12px}
+.finding-meta{font-size:10px}
+.knowledge-search-head{margin:0 0 19px!important}
+.search-line{max-width:100%;width:100%;min-height:42px;border-radius:12px;background:var(--panel);box-shadow:none}
+.knowledge-groups{display:flex;flex-direction:column;gap:23px}
+.knowledge-group h2{font-size:14px;margin:0 0 10px;font-weight:750}
+.knowledge-group .source-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:9px}
+.source-card{padding:12px;border-radius:12px;box-shadow:none;min-height:84px}
+.source-card-body h3{font-size:12px;line-height:1.4;margin:0 0 9px}
+.source-card-body>p{display:none!important}
+.source-meta{margin-top:0;font-size:10px}
+.source-open{font-size:11px}
+.history-row{padding:11px 0}
+.history-main strong{font-size:12px}
+.history-main small{display:none!important}
+.empty-state{padding:35px 12px}
+.admin-add-form{border-bottom:1px solid var(--border);padding-bottom:20px;margin-bottom:20px}
+.admin-add-form h2,.admin-source-list h2{font-size:15px;margin:0 0 14px}
+.admin-source-row{display:grid;grid-template-columns:minmax(0,2fr) minmax(100px,1fr) auto;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px}
+.admin-source-row span:nth-child(2){color:var(--muted);font-size:11px}
+.export-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.export-form .field{min-width:0}
+.export-form .field input,.export-form .field select{width:100%;min-width:0}
+.modal{max-height:90vh;overflow:auto}
+.modal-top p{display:none!important}
+.modal-content>p{margin-top:0}
+.toast{box-shadow:var(--shadow-small)}
+@media(max-width:1120px){.content-grid{grid-template-columns:minmax(0,1fr)}.right-rail{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:10px}.conversation-column{min-height:calc(100vh - 100px)}}
+@media(max-width:760px){.sidebar{transform:translateX(-100%);width:252px!important;padding:15px 10px 12px!important}.sidebar.open{transform:translateX(0)}.sidebar.collapsed{width:76px!important}.sidebar.collapsed .nav-item span,.sidebar.collapsed .profile-copy,.sidebar.collapsed .new-chat-label,.sidebar.collapsed .nav-label{display:initial!important}.sidebar.collapsed .nav-item{width:100%;padding:0 11px;justify-content:flex-start}.sidebar.collapsed .brand{justify-content:space-between}.app-main,body:has(.sidebar:not(.collapsed)) .app-main{margin-left:0;width:100%}.mobile-menu{display:grid}.topbar{padding:0 14px}.workspace{padding:18px 12px 24px}.welcome-block{padding:38px 4px 12px}.welcome-block h2{font-size:24px}.mode-switcher{gap:5px}.mode-chip{font-size:11px;padding:6px 8px}.right-rail{grid-template-columns:1fr}.page-panel{padding:14px}.template-grid{grid-template-columns:1fr}.export-form{grid-template-columns:1fr}.admin-source-row{grid-template-columns:1fr auto}.admin-source-row span:nth-child(2){display:none}.composer-tools{gap:6px}.composer-tool{font-size:11px;padding:6px 7px}}
+
+
+/* Compact, low-noise refinement */
+.sidebar{width:236px;padding:14px 10px 12px;transition:width .18s ease,padding .18s ease,background .25s ease}
+.sidebar.collapsed{width:64px;padding:14px 7px 12px}
+.app-main{margin-left:64px;width:calc(100% - 64px);transition:margin-left .18s ease,width .18s ease}
+body:has(.sidebar:not(.collapsed)) .app-main{margin-left:236px;width:calc(100% - 236px)}
+.brand{justify-content:space-between;gap:5px;padding:0 3px;margin-bottom:15px;min-height:38px}
+.brand-mark{width:36px;height:36px;min-width:36px;border-radius:11px;box-shadow:none}
+.brand-mark svg{width:23px;height:23px}
+.sidebar.collapsed .brand{justify-content:center;gap:0}
+.sidebar.collapsed .sidebar-toggle{position:absolute;right:4px;top:47px;width:17px;height:19px;border:0;background:transparent;padding:0;opacity:.72}
+.sidebar.collapsed .sidebar-toggle svg{width:13px;height:13px}
+.sidebar:not(.collapsed) .sidebar-toggle{width:29px;height:29px}
+.new-chat{height:39px;min-height:39px;box-shadow:none;justify-content:flex-start;padding:0 10px;border-radius:11px;gap:9px}
+.sidebar.collapsed .new-chat{width:40px;padding:0;justify-content:center;margin:0 auto}
+.sidebar.collapsed .new-chat-label,.sidebar.collapsed .nav-label,.sidebar.collapsed .nav-item span,.sidebar.collapsed .profile-copy{display:none!important}
+.nav-label{margin:20px 8px 7px;font-size:10px;letter-spacing:0;text-transform:none;color:var(--muted);font-weight:700;white-space:nowrap}
+.nav-group{gap:3px}
+.nav-item{height:40px;min-height:40px;padding:0 10px;gap:10px;border-radius:10px;font-size:12px;box-shadow:none!important}
+.nav-item svg{width:18px;height:18px}
+.sidebar.collapsed .nav-item{width:40px;padding:0;justify-content:center;margin:0 auto}
+.sidebar.collapsed .nav-item.active{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--blue) 22%,transparent)!important}
+.sidebar.collapsed .profile{justify-content:center;padding:10px 0 0;gap:2px}
+.sidebar.collapsed .profile-menu{margin-left:0;padding:4px}
+.profile{padding:10px 4px 0}
+.topbar{height:50px;min-height:50px;padding:0 20px;border-bottom-color:color-mix(in srgb,var(--border) 70%,transparent)}
+.topbar-left{min-width:0}.topbar-right{margin-left:auto}
+.theme-toggle.icon-only{width:34px;height:34px;min-width:34px;display:grid;place-items:center;padding:0;border:1px solid var(--border);border-radius:50%;box-shadow:none}
+.theme-toggle.icon-only svg{width:17px;height:17px}
+.mobile-menu{height:34px;width:34px;border-radius:50%}
+.workspace{padding:18px 26px 24px;max-width:1500px}
+.page-heading{margin:0 0 14px}
+.page-heading h1{font-size:22px;letter-spacing:-.5px;font-weight:750}
+.content-grid{grid-template-columns:minmax(0,1fr);gap:0;min-height:calc(100vh - 72px)}
+.conversation-column{max-width:930px;min-height:calc(100vh - 80px);display:flex;flex-direction:column}
+.welcome-block{padding:52px 8px 10px;max-width:760px}
+.welcome-block h2{font-size:24px;letter-spacing:-.6px;margin:0}
+.welcome-block p{display:none!important}
+.mode-switcher{gap:6px;margin-top:10px;justify-content:center}
+.mode-chip{font-size:11px;line-height:1.15;padding:6px 9px;border-radius:999px;box-shadow:none;min-height:30px}
+.chat-stream{flex:1;padding:10px 4px 14px;gap:14px}
+.chat-composer{margin-top:auto;max-width:900px;border-radius:17px;padding:13px 14px 10px;box-shadow:0 4px 15px rgba(44,78,121,.05)}
+.composer-form{gap:8px}
+.composer-form textarea{min-height:58px;height:58px;font-size:14px;padding:7px 3px;resize:none}
+.composer-bottom{align-items:center;gap:8px}
+.composer-tools{gap:5px}.composer-hint{font-size:10px;color:var(--muted-2);padding-left:2px}
+.composer-tool{font-size:11px;padding:6px 8px;border-radius:8px;box-shadow:none}
+.composer-bottom{justify-content:flex-end}.send-button{width:35px;height:35px;min-width:35px;border-radius:50%;margin-left:auto}
+.right-rail{position:fixed;top:72px;right:14px;width:38px;z-index:18;display:flex;flex-direction:column;gap:7px;align-items:flex-end;margin:0}
+.rail-disclosure{width:38px;max-width:calc(100vw - 24px);border:1px solid var(--border);border-radius:11px;background:var(--panel);box-shadow:none;overflow:visible;position:relative}
+.rail-disclosure summary{display:flex;align-items:center;justify-content:center;gap:0;padding:8px;width:36px;height:36px;font-size:0;line-height:0;white-space:nowrap;overflow:hidden;border-radius:10px;list-style:none}
+.rail-disclosure summary::-webkit-details-marker{display:none}
+.rail-disclosure summary svg{width:17px;height:17px;flex:none;margin:0}
+.rail-disclosure[open]{width:236px;box-shadow:var(--shadow-small);overflow:hidden}
+.rail-disclosure[open] summary{justify-content:flex-start;gap:8px;padding:10px 12px;width:100%;height:38px;font-size:12px;line-height:1.3;border-bottom:1px solid var(--border)}
+.rail-disclosure-body{padding:6px 8px 8px;max-height:55vh;overflow:auto}
+.rail-action{padding:7px 5px;font-size:11px}
+.rail-action .quick-icon{width:27px;height:27px;min-width:27px;margin:0}
+.page-panel,.form-panel,.result-card{box-shadow:none;border-radius:13px}
+.page-panel{padding:18px}
+.section-head{margin-bottom:12px}
+.section-head p{display:none!important}
+.template-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:9px}
+.template-card{min-height:92px;padding:13px;box-shadow:none}
+.template-card .quick-icon{width:29px;height:29px;margin-bottom:8px}
+.template-card h3{font-size:12px;margin:0 0 6px}
+.template-card p{display:none!important}
+.form-layout.single{max-width:900px;grid-template-columns:minmax(0,1fr)}
+.form-panel{padding:17px}
+.form-fields{gap:12px}
+.form-fields .field label{font-size:12px;margin-bottom:4px}
+.form-fields .field input,.form-fields .field textarea,.field select{min-height:39px;padding:8px 10px;font-size:13px}
+.form-fields .field textarea{min-height:72px}
+.result-card{padding:15px;margin-top:16px}
+.result-head h3{font-size:14px;margin:0}
+.result-content{font-size:13px;line-height:1.65}
+.callout,.checker-note,.preview-card,.preview-status,.preview-rule,.intro,.field-help{display:none!important}
+.dropzone{padding:24px 14px;border-radius:12px}
+.dropzone p{display:none!important}
+.checker-controls{border:0;padding:12px 0 0;margin-top:9px}
+.finding{box-shadow:none;border-radius:10px;padding:12px}
+.search-line{max-width:100%;width:100%;min-height:42px;border-radius:11px;box-shadow:none}
+.knowledge-groups{display:flex;flex-direction:column;gap:7px}
+.knowledge-group{border:1px solid var(--border);border-radius:12px;background:var(--panel);overflow:hidden}
+.knowledge-group>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 15px;list-style:none;cursor:pointer;font-size:13px;font-weight:700}
+.knowledge-group>summary::-webkit-details-marker{display:none}
+.knowledge-group>summary:after{content:'+';color:var(--muted);font-size:18px;font-weight:400}
+.knowledge-group[open]>summary:after{content:'−'}
+.knowledge-count{margin-left:auto;color:var(--muted);font-size:11px;font-weight:600}
+.knowledge-group .source-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0;border-top:1px solid var(--border);padding:4px 12px 8px}
+.source-card{padding:10px 3px;border-radius:0;box-shadow:none;min-height:62px;border-bottom:1px solid var(--border)}
+.source-card:last-child{border-bottom:0}
+.source-card-body h3{font-size:12px;line-height:1.4;margin:0 0 6px}
+.source-card-body>p{display:none!important}
+.source-meta{margin-top:0;font-size:10px;justify-content:space-between}
+.source-type{font-size:10px;color:var(--muted)}
+.source-open{font-size:11px}
+.history-row{padding:10px 0}
+.history-main strong{font-size:12px}
+.history-main small{display:none!important}
+.empty-state{padding:30px 12px}
+.admin-add-form{padding-bottom:17px;margin-bottom:17px}
+.admin-add-form h2,.admin-source-list h2{font-size:14px;margin:0 0 12px}
+.admin-source-row{padding:9px 0;font-size:12px}
+.export-form{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.export-form .field{min-width:0}
+.export-form .field input,.export-form .field select{width:100%;min-width:0}
+.modal{max-height:90vh;overflow:auto}
+.modal-top p{display:none!important}
+.modal-content>p{margin-top:0}
+.toast{box-shadow:var(--shadow-small)}
+.nav-item[hidden]{display:none!important}
+.admin-only[hidden]{display:none!important}
+@media(max-width:1120px){.conversation-column{min-height:calc(100vh - 76px)}.workspace{padding:18px 18px 22px}.content-grid{grid-template-columns:minmax(0,1fr)}.right-rail{right:10px}.chat-composer{max-width:100%}}
+@media(max-width:760px){.sidebar{transform:translateX(-100%);width:236px!important;padding:14px 10px 12px!important}.sidebar.open{transform:translateX(0)}.sidebar.collapsed{width:236px!important}.sidebar.collapsed .nav-item span,.sidebar.collapsed .profile-copy,.sidebar.collapsed .new-chat-label,.sidebar.collapsed .nav-label{display:initial!important}.sidebar.collapsed .nav-item{width:100%;padding:0 10px;justify-content:flex-start;margin:0}.sidebar.collapsed .brand{justify-content:space-between}.sidebar.collapsed .sidebar-toggle{position:static;width:29px;height:29px;border:1px solid var(--border);background:var(--panel);padding:0;opacity:1}.sidebar.collapsed .profile{justify-content:flex-start;padding:10px 4px 0}.sidebar.collapsed .profile-copy{display:block!important}.sidebar.collapsed .profile-menu{margin-left:auto}.app-main,body:has(.sidebar:not(.collapsed)) .app-main{margin-left:0;width:100%}.mobile-menu{display:grid}.topbar{padding:0 14px}.workspace{padding:14px 12px 20px}.welcome-block{padding:34px 4px 8px}.welcome-block h2{font-size:22px}.mode-switcher{gap:5px;flex-wrap:wrap}.mode-chip{font-size:10px;padding:6px 8px}.right-rail{top:auto;bottom:100px;right:10px}.rail-disclosure[open]{width:min(230px,calc(100vw - 28px))}.page-panel{padding:13px}.template-grid{grid-template-columns:1fr}.export-form{grid-template-columns:1fr}.admin-source-row{grid-template-columns:1fr auto}.admin-source-row span:nth-child(2){display:none}.composer-tools{gap:5px;flex-wrap:wrap}.composer-tool{font-size:10px;padding:6px 7px}.chat-composer{padding:10px}.form-panel{padding:14px}}
+
+
+
+/* Design system v2 — calm, rounded, deliberately restrained */
+:root{
+  color-scheme:light;
+  --bg:#F1F3F0;
+  --sidebar:#E7ECE8;
+  --panel:#FCFDFB;
+  --panel-soft:#F5F8F5;
+  --panel-alt:#E6EEEA;
+  --text:#20323D;
+  --muted:#66787D;
+  --muted-2:#8A9999;
+  --border:#D5DFDA;
+  --border-strong:#C2D0C9;
+  --blue:#315F78;
+  --blue-2:#497F91;
+  --blue-soft:#DFEAE7;
+  --teal:#3C8179;
+  --green:#32796C;
+  --green-soft:#E1F0E9;
+  --amber:#A87931;
+  --amber-soft:#F6EDDA;
+  --red:#A95656;
+  --red-soft:#F6E5E3;
+  --shadow:0 20px 60px rgba(34,59,64,.10);
+  --shadow-small:0 7px 24px rgba(34,59,64,.07);
+  --radius:24px;
+  --radius-sm:17px;
+  --input:#FCFDFB;
+  --rail:#F7F9F6;
+}
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#1D2C33;
+  --sidebar:#22363D;
+  --panel:#283E45;
+  --panel-soft:#2D454D;
+  --panel-alt:#35515A;
+  --text:#E8F0EC;
+  --muted:#B1C3BD;
+  --muted-2:#879E98;
+  --border:#3C565B;
+  --border-strong:#4B696C;
+  --blue:#A3D4CE;
+  --blue-2:#80BDB6;
+  --blue-soft:#334F52;
+  --teal:#92D2CB;
+  --green:#9BD4B6;
+  --green-soft:#304D48;
+  --amber:#E1C18B;
+  --amber-soft:#4C4538;
+  --red:#E6A4A1;
+  --red-soft:#4A353A;
+  --shadow:0 22px 60px rgba(7,20,23,.22);
+  --shadow-small:0 8px 24px rgba(7,20,23,.15);
+  --input:#253A42;
+  --rail:#253B43;
+}
+
+html,body{background:var(--bg);color:var(--text)}
+body{font-size:14px;line-height:1.5}
+.app-shell{min-height:100vh}
+.app-main,body:has(.sidebar:not(.collapsed)) .app-main{margin-left:0!important;width:100%!important;min-width:0}
+.topbar{height:60px;min-height:60px;padding:0 24px 0 76px;background:color-mix(in srgb,var(--bg) 90%,transparent);border:0;backdrop-filter:blur(16px)}
+.topbar-left{min-width:0}.topbar-right{margin-left:auto}
+.site-logo{position:fixed;top:15px;left:17px;width:42px;height:42px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,#355F76,#3B827C);color:#F7FBF8;box-shadow:0 10px 24px rgba(40,91,100,.22);z-index:100;transition:transform .22s ease,box-shadow .22s ease}
+.site-logo:hover{transform:translateY(-1px);box-shadow:0 13px 28px rgba(40,91,100,.27)}
+.site-logo svg{width:25px;height:25px}
+.brand{display:none!important}
+.sidebar-toggle{display:none!important}
+/* The collapsed navigation floats as a short vertical capsule in the middle-left. */
+.sidebar{
+  position:fixed;left:14px;top:50%;right:auto;bottom:auto;
+  transform:translateY(-50%);width:64px;height:360px;max-height:calc(100vh - 72px);
+  padding:10px 6px;background:color-mix(in srgb,var(--panel) 93%,transparent);
+  border:1px solid var(--border);border-radius:29px;box-shadow:var(--shadow-small);
+  display:flex;flex-direction:column;align-items:stretch;gap:7px;z-index:80;
+  overflow:hidden;overscroll-behavior:contain;
+  transition:width .32s cubic-bezier(.2,.8,.2,1),height .32s cubic-bezier(.2,.8,.2,1),top .32s cubic-bezier(.2,.8,.2,1),transform .32s cubic-bezier(.2,.8,.2,1),padding .32s ease,border-radius .32s ease,background .22s ease,box-shadow .22s ease;
+}
+.sidebar.collapsed:not(:hover):not(.open){width:64px;height:360px;top:50%;transform:translateY(-50%);padding:10px 6px;overflow:hidden}
+.sidebar.collapsed:not(:hover):not(.open) .new-chat-label,
+.sidebar.collapsed:not(:hover):not(.open) .nav-label,
+.sidebar.collapsed:not(:hover):not(.open) .nav-item span,
+.sidebar.collapsed:not(:hover):not(.open) .profile-copy{display:none!important}
+.sidebar.collapsed:not(:hover):not(.open) .sidebar-spacer{display:none!important}
+.sidebar.collapsed:not(:hover):not(.open) .new-chat{width:42px;min-width:42px;height:42px;min-height:42px;margin:0 auto;padding:0;justify-content:center;border-radius:16px;box-shadow:none}
+.sidebar.collapsed:not(:hover):not(.open) .new-chat .plus{font-size:24px;line-height:1}
+.sidebar.collapsed:not(:hover):not(.open) .nav-group{gap:4px}
+.sidebar.collapsed:not(:hover):not(.open) .nav-item{width:42px;min-width:42px;height:39px;min-height:39px;margin:0 auto;padding:0;justify-content:center;gap:0;border-radius:15px;color:var(--muted)}
+.sidebar.collapsed:not(:hover):not(.open) .nav-item svg{width:19px;height:19px}
+.sidebar.collapsed:not(:hover):not(.open) .nav-item.active{background:var(--blue-soft);color:var(--blue);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--blue) 18%,transparent)!important}
+.sidebar.collapsed:not(:hover):not(.open) .profile{justify-content:center;gap:0;padding:5px 0 0;border-top:1px solid var(--border)}
+.sidebar.collapsed:not(:hover):not(.open) .profile .avatar{display:none}
+.sidebar.collapsed:not(:hover):not(.open) .profile-menu{margin:0;padding:7px;width:38px;height:34px;border-radius:13px;display:grid;place-items:center;background:transparent}
+.sidebar.collapsed:not(:hover):not(.open) .profile-menu svg{width:17px;height:17px}
+.sidebar.collapsed:hover,.sidebar:not(.collapsed),.sidebar.open{
+  width:252px;height:calc(100vh - 84px);max-height:calc(100vh - 84px);top:66px;bottom:18px;transform:none;
+  padding:72px 12px 12px;border-radius:30px;box-shadow:var(--shadow);overflow-y:auto;overflow-x:hidden;
+}
+.sidebar.collapsed:hover .new-chat-label,.sidebar.collapsed:hover .nav-label,.sidebar.collapsed:hover .nav-item span,.sidebar.collapsed:hover .profile-copy,
+.sidebar:not(.collapsed) .new-chat-label,.sidebar:not(.collapsed) .nav-label,.sidebar:not(.collapsed) .nav-item span,.sidebar:not(.collapsed) .profile-copy,
+.sidebar.open .new-chat-label,.sidebar.open .nav-label,.sidebar.open .nav-item span,.sidebar.open .profile-copy{display:initial!important}
+.sidebar.collapsed:hover .sidebar-spacer,.sidebar:not(.collapsed) .sidebar-spacer,.sidebar.open .sidebar-spacer{display:block!important;flex:1}
+.sidebar.collapsed:hover .new-chat,.sidebar:not(.collapsed) .new-chat,.sidebar.open .new-chat{width:100%;justify-content:flex-start;padding:0 12px;border-radius:16px}
+.sidebar.collapsed:hover .nav-item,.sidebar:not(.collapsed) .nav-item,.sidebar.open .nav-item{width:100%;justify-content:flex-start;padding:0 12px;border-radius:15px}
+.sidebar.collapsed:hover .profile,.sidebar:not(.collapsed) .profile,.sidebar.open .profile{justify-content:flex-start;padding:12px 4px 0;border-top:1px solid var(--border)}
+.sidebar.collapsed:hover .profile-menu,.sidebar:not(.collapsed) .profile-menu,.sidebar.open .profile-menu{margin-left:auto}
+.nav-label{margin:17px 10px 5px;text-transform:none;letter-spacing:0;font-size:12px;color:var(--muted);font-weight:650}
+.nav-group{gap:4px}
+.nav-item{height:42px;min-height:42px;font-size:13px;font-weight:620;border-radius:15px;padding:0 12px;gap:12px}
+.new-chat{height:42px;min-height:42px;font-size:13px;font-weight:700;border-radius:16px}
+.profile{border-top:1px solid var(--border);padding-top:12px}
+.avatar{border-radius:14px}
+.profile-menu{border-radius:13px;display:grid;place-items:center}
+.mobile-menu{display:none}
+.theme-toggle.icon-only{width:40px;height:40px;min-width:40px;border-radius:50%;background:var(--panel);border:1px solid var(--border);box-shadow:0 3px 12px color-mix(in srgb,var(--text) 5%,transparent)}
+.theme-toggle.icon-only svg{width:18px;height:18px}
+.workspace{width:100%;max-width:1500px;margin:0 auto;padding:16px 82px 28px}
+.content-grid{display:block;min-height:calc(100vh - 76px)}
+.conversation-column{max-width:930px;min-height:calc(100vh - 86px);width:100%;margin:0 auto;display:flex;flex-direction:column}
+.page-heading{margin:0 0 18px}
+.page-heading h1{font-size:24px;letter-spacing:-.65px;font-weight:760}
+.welcome-block{padding:clamp(130px,16vh,165px) 8px 16px;max-width:920px;margin:0 auto;text-align:center}
+.welcome-block h2{font-size:clamp(24px,2.5vw,31px);line-height:1.2;letter-spacing:-.85px;font-weight:760;margin:0}
+.mode-switcher{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:23px}
+.mode-chip{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 16px;border:1px solid var(--border);background:color-mix(in srgb,var(--panel) 86%,var(--panel-soft));color:var(--text);border-radius:999px;font-size:12px;font-weight:680;box-shadow:none;transition:transform .18s ease,border-color .18s ease,background .18s ease}
+.mode-chip svg{width:16px;height:16px;color:var(--blue)}
+.mode-chip:hover{transform:translateY(-1px);border-color:var(--blue-2);background:var(--panel)}
+.starter-prompts{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin:23px auto 0;max-width:900px}
+.starter-prompt{display:inline-flex;align-items:center;gap:9px;min-height:42px;border:1px solid var(--border);background:var(--panel);color:var(--muted);padding:10px 14px;border-radius:17px;font-size:12px;font-weight:590;text-align:left;box-shadow:0 3px 12px color-mix(in srgb,var(--text) 3%,transparent);transition:transform .18s ease,border-color .18s ease,color .18s ease,background .18s ease}
+.starter-prompt svg{width:16px;height:16px;color:var(--blue);flex:none}
+.starter-prompt:hover{border-color:var(--blue-2);color:var(--text);background:var(--panel-soft);transform:translateY(-1px)}
+.chat-stream{flex:1;min-height:36px;padding:12px 4px 20px;gap:16px;overscroll-behavior:contain}
+.chat-message{max-width:850px;gap:12px}
+.msg-avatar{width:34px;height:34px;border-radius:15px}
+.message-bubble{border-radius:22px!important;padding:16px 19px;font-size:14px;line-height:1.7;box-shadow:0 4px 15px color-mix(in srgb,var(--text) 3%,transparent)}
+.chat-message.user .message-bubble{border-radius:22px!important}
+.message-actions{margin:8px 0 0;gap:9px}
+.text-action{border-radius:999px;padding:5px 9px;font-size:11px}
+.citation{border-radius:999px;padding:7px 11px}
+/* ChatGPT-like single compact composer row */
+.chat-composer{width:100%;max-width:820px;margin:auto auto 10px;border-radius:30px;padding:8px 9px 8px 21px;background:var(--input);border:1px solid var(--border-strong);box-shadow:0 7px 24px color-mix(in srgb,var(--text) 5%,transparent)}
+.chat-composer:focus-within{border-color:var(--blue-2);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 12%,transparent),0 8px 25px color-mix(in srgb,var(--text) 5%,transparent)}
+.composer-form{display:grid;grid-template-columns:minmax(0,1fr) 40px;align-items:end;gap:8px}
+.composer-form textarea{grid-column:1;grid-row:1;width:100%;height:34px;min-height:34px;max-height:120px;resize:none;background:transparent;color:var(--text);border:0;outline:none;padding:7px 0;font-size:14px;line-height:1.45;overflow-y:auto}
+.composer-form textarea::placeholder{color:var(--muted-2)}
+.composer-bottom{grid-column:2;grid-row:1;justify-content:center!important;align-items:end;gap:0;margin:0}
+.send-button{width:40px;height:40px;min-width:40px;border-radius:50%;background:var(--blue);color:#F8FBFA;box-shadow:none;transition:transform .18s ease,filter .18s ease}
+.send-button:hover{transform:scale(1.04);filter:brightness(1.08)}
+.right-rail{position:fixed;top:78px;right:16px;width:46px;z-index:45;display:flex;flex-direction:column;gap:9px;align-items:flex-end;margin:0}
+.rail-disclosure{width:46px;max-width:calc(100vw - 30px);border:1px solid var(--border);border-radius:19px;background:var(--panel);box-shadow:var(--shadow-small);overflow:visible;position:relative;transition:width .22s ease,box-shadow .22s ease}
+.rail-disclosure summary{width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:10px;border-radius:18px;list-style:none;font-size:0;line-height:0;overflow:hidden}
+.rail-disclosure summary::-webkit-details-marker{display:none}
+.rail-disclosure summary svg{width:19px;height:19px;flex:none;margin:0;color:var(--blue)}
+.rail-disclosure[open]{width:258px;box-shadow:var(--shadow)}
+.rail-disclosure[open] summary{width:100%;height:46px;justify-content:flex-start;gap:10px;padding:12px 15px;font-size:13px;line-height:1.3;border-bottom:1px solid var(--border);border-radius:18px 18px 0 0}
+.rail-disclosure-body{padding:8px 10px 10px;max-height:55vh;overflow:auto}
+.rail-action{border-radius:15px;padding:9px 7px;font-size:12px}
+.rail-action .quick-icon{width:34px;height:34px;min-width:34px;border-radius:13px;margin:0}
+.source-mini{border-radius:14px;padding:9px}
+/* Other workspaces keep the same visual rhythm */
+.page-wrap{max-width:940px;margin:0 auto}
+.page-panel,.form-panel,.result-card{border-radius:24px!important;border:1px solid var(--border);box-shadow:var(--shadow-small)}
+.page-panel{padding:24px;background:var(--panel)}
+.form-panel{padding:24px;background:var(--panel)}
+.result-card{padding:23px;background:var(--panel)}
+.template-grid{gap:12px}
+.template-card{border:1px solid var(--border);border-radius:22px!important;background:var(--panel);min-height:118px;padding:19px;box-shadow:none;transition:transform .18s ease,border-color .18s ease,background .18s ease}
+.template-card:hover{transform:translateY(-2px);border-color:var(--blue-2);background:var(--panel-soft)}
+.template-card .quick-icon,.quick-icon{border-radius:15px}
+.template-card h3{font-size:14px;line-height:1.45;font-weight:720}
+.button-primary,.button-secondary,.button-quiet{border-radius:999px!important;min-height:40px;padding:9px 16px;font-weight:680}
+.field input,.field textarea,.field select,.export-form .field input,.export-form .field select{border-radius:16px!important;background:var(--input);border:1px solid var(--border-strong);color:var(--text);padding:11px 14px}
+.field textarea{border-radius:17px!important}
+.dropzone{border-radius:24px!important;border:1.5px dashed var(--border-strong);background:var(--panel-soft);padding:35px 18px}
+.search-line{border-radius:999px!important;min-height:48px;padding:0 17px;background:var(--panel);border:1px solid var(--border-strong)}
+.search-line input{background:transparent;color:var(--text)}
+.knowledge-groups{gap:10px}
+.knowledge-group{border-radius:21px!important;background:var(--panel);border:1px solid var(--border)}
+.knowledge-group>summary{padding:17px 20px;font-size:14px}
+.knowledge-group .source-grid{padding:5px 17px 12px}
+.source-card{padding:13px 8px;gap:13px}
+.source-card .doc-icon{border-radius:14px}
+.source-card-body h3{font-size:13px;font-weight:680}
+.history-row{padding:13px 4px;border-bottom:1px solid var(--border)}
+.history-icon{border-radius:15px}
+.history-row>button{border-radius:999px!important;padding:8px 12px}
+.modal{border-radius:27px!important;border:1px solid var(--border);background:var(--panel);box-shadow:var(--shadow)}
+.modal-close{border-radius:50%}
+.toast{border-radius:17px!important;background:var(--text);color:var(--panel);box-shadow:var(--shadow)}
+
+@media(max-width:1000px){
+ .workspace{padding:16px 72px 24px}
+ .right-rail{right:10px}
+ .conversation-column{max-width:820px}
+}
+@media(max-width:760px){
+ .topbar{height:58px;min-height:58px;padding:0 14px 0 67px}
+ .site-logo{top:10px;left:11px;width:40px;height:40px;border-radius:15px}
+ .mobile-menu{display:grid;width:38px;height:38px;border-radius:50%;background:var(--panel);border:1px solid var(--border);color:var(--text)}
+ .sidebar,.sidebar.collapsed,.sidebar.collapsed:not(:hover):not(.open),.sidebar.collapsed:hover,.sidebar:not(.collapsed),.sidebar.open{left:10px;right:auto;top:10px;bottom:10px;width:min(270px,calc(100vw - 20px));height:calc(100vh - 20px);max-height:calc(100vh - 20px);transform:translateX(-112%);padding:67px 12px 12px;border-radius:28px;overflow-y:auto;box-shadow:var(--shadow);}
+ .sidebar.open{transform:translateX(0)}
+ .sidebar.collapsed:not(:hover):not(.open) .new-chat-label,.sidebar.collapsed:not(:hover):not(.open) .nav-label,.sidebar.collapsed:not(:hover):not(.open) .nav-item span,.sidebar.collapsed:not(:hover):not(.open) .profile-copy{display:initial!important}
+ .sidebar.collapsed:not(:hover):not(.open) .sidebar-spacer{display:block!important;flex:1}
+ .sidebar.collapsed:not(:hover):not(.open) .new-chat{width:100%;justify-content:flex-start;padding:0 12px}
+ .sidebar.collapsed:not(:hover):not(.open) .nav-item{width:100%;height:42px;justify-content:flex-start;padding:0 12px;gap:12px}
+ .sidebar.collapsed:not(:hover):not(.open) .profile{justify-content:flex-start;padding:12px 4px 0;border-top:1px solid var(--border)}
+ .sidebar.collapsed:not(:hover):not(.open) .profile .avatar{display:grid}
+ .sidebar.collapsed:not(:hover):not(.open) .profile-menu{margin-left:auto}
+ .app-main,body:has(.sidebar:not(.collapsed)) .app-main{margin-left:0!important;width:100%!important}
+ .workspace{padding:12px 13px 18px}
+ .welcome-block{padding:clamp(50px,8vh,76px) 2px 10px}
+ .welcome-block h2{font-size:25px}
+ .mode-switcher{gap:7px;margin-top:20px}
+ .mode-chip{min-height:39px;padding:8px 13px;font-size:11px}
+ .starter-prompts{margin-top:17px;gap:7px}
+ .starter-prompt{min-height:38px;padding:9px 12px;font-size:11px}
+ .conversation-column{min-height:calc(100vh - 78px)}
+ .chat-composer{border-radius:28px;padding:7px 8px 7px 17px;margin-bottom:8px}
+ .composer-form{grid-template-columns:minmax(0,1fr) 38px;gap:7px}
+ .composer-form textarea{height:36px;min-height:36px;font-size:13px}
+ .send-button{height:38px;width:38px;min-width:38px}
+ .right-rail{right:8px;top:72px;width:42px;gap:7px}
+ .rail-disclosure{width:42px}
+ .rail-disclosure summary{width:40px;height:40px}
+ .rail-disclosure[open]{width:min(250px,calc(100vw - 22px))}
+ .page-panel,.form-panel,.result-card{padding:15px}
+ .template-grid{grid-template-columns:1fr}
+ .template-card{min-height:84px;padding:15px}
+ .export-form{grid-template-columns:1fr}
+ .admin-source-row{grid-template-columns:1fr auto}
+ .admin-source-row span:nth-child(2){display:none}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Refinements: compact composer and interactive document preview/editor */
+.chat-composer{max-width:594px;border-radius:28px;padding:7px 9px;background:var(--panel);}
+.composer-form{display:flex;flex-direction:row;align-items:center;gap:8px;min-height:38px}
+.composer-form textarea{height:36px!important;min-height:36px!important;max-height:100px;resize:none;flex:1;padding:4px 6px;line-height:21px}
+.composer-bottom{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.send-button{width:36px;height:36px;border-radius:50%!important}
+.citation{cursor:pointer;border-radius:999px}
+.citation:hover{border-color:var(--blue);color:var(--blue)}
+.document-preview{white-space:pre-wrap;background:#fff;color:#202a35;border:1px solid #d8dee7;border-radius:16px;padding:30px 34px;min-height:300px;max-height:58vh;overflow:auto;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:1.75;box-shadow:0 10px 28px rgba(0,0,0,.06)}
+.document-editor{width:100%;min-height:330px;resize:vertical;border:1px solid var(--border);border-radius:18px;background:var(--panel);color:var(--text);padding:16px;line-height:1.65}
+.admin-section-tools{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0 0 18px}
+.admin-section-tools input{min-width:0;border:1px solid var(--border);border-radius:14px;padding:10px 13px;background:var(--panel);color:var(--text)}
+.admin-source-row{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(100px,1fr) auto auto;gap:10px;align-items:center}
+@media(max-width:680px){.chat-composer{max-width:100%}.admin-source-row{grid-template-columns:1fr 1fr}.admin-source-row button{justify-self:start}}
+
+
+/* Input sizing aligned to the provided ChatGPT reference screenshot. */
+.chat-composer{width:100%;max-width:660px;min-height:46px;box-sizing:border-box;padding:4px 5px 4px 10px;border-radius:28px}
+.composer-form{min-height:34px;align-items:center}
+.composer-form textarea{height:34px!important;min-height:34px!important;padding:4px 6px;line-height:21px}
+.composer-bottom{align-items:center}
+.send-button{width:34px;height:34px;flex:0 0 34px;border-radius:50%!important}
+@media(max-width:680px){.chat-composer{width:100%;max-width:100%}}
+
+/* Adaptive chat input: grows in height to show the complete message without an inner scrollbar */
+.chat-composer{width:min(100%,440px)!important;max-width:440px!important;margin-left:auto!important;margin-right:auto!important;transition:width .28s cubic-bezier(.2,.75,.25,1),max-width .28s cubic-bezier(.2,.75,.25,1),border-color .18s,box-shadow .18s}
+.chat-composer.is-typing,.chat-composer:focus-within{width:min(100%,660px)!important;max-width:660px!important}
+.chat-composer .composer-form{align-items:flex-end}
+.chat-composer .composer-bottom{align-items:flex-end}
+.chat-composer .composer-form textarea{min-height:45px!important;height:45px!important;max-height:none!important;overflow-y:hidden!important;overflow-x:hidden!important;white-space:pre-wrap;overflow-wrap:anywhere;transition:height .12s ease;resize:none;padding:12px!important;line-height:21px!important;box-sizing:border-box;display:block}
+@media(max-width:680px){.chat-composer,.chat-composer.is-typing,.chat-composer:focus-within{width:100%!important;max-width:100%!important}}
+
+
+/* Usability refinement: clear disclosure controls, stronger dark-theme contrast, and editable checked files. */
+.knowledge-group>summary{list-style:none}
+.knowledge-group>summary::-webkit-details-marker{display:none}
+.knowledge-group>summary::marker{content:""}
+.knowledge-group>summary::after{content:""!important;display:block;width:7px;height:7px;flex:0 0 7px;margin-left:12px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform .18s ease,border-color .18s ease}
+.knowledge-group[open]>summary::after{content:""!important;transform:rotate(225deg);border-color:var(--blue)}
+.knowledge-group>summary:hover::after{border-color:var(--blue)}
+.source-open{border:1px solid var(--border-strong);background:var(--panel-soft);border-radius:999px;padding:6px 10px;transition:background .16s,border-color .16s,color .16s}
+.source-open:hover{background:var(--blue-soft);border-color:var(--blue);color:var(--blue)}
+.checked-editor-card{margin-top:16px}
+.checked-editor-card .document-editor{display:block;min-height:330px;max-height:none;overflow-y:hidden;resize:vertical;white-space:pre-wrap;overflow-wrap:anywhere;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px}
+.edited-file-name{display:flex;align-items:center;gap:8px;margin:0 0 12px;color:var(--muted);font-size:12px}
+.edited-file-name svg{width:15px;height:15px;color:var(--blue)}
+#saveCheckedEditBtn.is-saved{background:var(--green);border-color:var(--green);color:#fff}
+html[data-theme="dark"] .rail-disclosure{border-color:#6687a8;background:#2b4562;box-shadow:0 7px 20px rgba(3,14,27,.26)}
+html[data-theme="dark"] .rail-disclosure summary{color:#f1f7ff;background:linear-gradient(140deg,#345878,#2d4967)}
+html[data-theme="dark"] .rail-disclosure summary svg{color:#c0e0ff}
+html[data-theme="dark"] .rail-disclosure summary:hover{background:linear-gradient(140deg,#416b91,#355777)}
+html[data-theme="dark"] .rail-disclosure[open]{border-color:#79a3cd;box-shadow:0 12px 32px rgba(3,14,27,.38)}
+html[data-theme="dark"] .rail-disclosure-body{border-top-color:#557491}
+html[data-theme="dark"] .rail-action{color:#eaf4ff;border-radius:11px}
+html[data-theme="dark"] .rail-action:hover{background:#375879;color:#fff}
+html[data-theme="dark"] .rail-action .quick-icon{background:#456d91;color:#d8ebff}
+html[data-theme="dark"] .source-open{background:#345878;border-color:#6d91b5;color:#e5f2ff}
+html[data-theme="dark"] .source-open:hover{background:#426c92;border-color:#9bc9f5;color:#fff}
+html[data-theme="dark"] .button-secondary{background:#2d4866;border-color:#6385a8;color:#eff7ff}
+html[data-theme="dark"] .button-secondary:hover{background:#385b7d;border-color:#9bc8f4;color:#fff}
+html[data-theme="dark"] .knowledge-group>summary:hover{background:#2b4562}
+
+
+/* v4 refinements: clear primary actions in dark theme and clean disclosure headers */
+html[data-theme="dark"] .button-primary,
+html[data-theme="dark"] button.button-primary,
+html[data-theme="dark"] input.button-primary {
+  background: linear-gradient(135deg, #4B9C94 0%, #367F7B 100%) !important;
+  border: 1px solid #6CC0B6 !important;
+  color: #F7FFFD !important;
+  box-shadow: 0 5px 16px rgba(34, 133, 126, .26), inset 0 1px 0 rgba(255,255,255,.16) !important;
+  font-weight: 750 !important;
+}
+html[data-theme="dark"] .button-primary:hover,
+html[data-theme="dark"] button.button-primary:hover {
+  background: linear-gradient(135deg, #5BB1A7 0%, #438F88 100%) !important;
+  border-color: #8BD7CE !important;
+  box-shadow: 0 7px 20px rgba(34, 133, 126, .34), inset 0 1px 0 rgba(255,255,255,.2) !important;
+  transform: translateY(-1px);
+}
+html[data-theme="dark"] .button-primary:disabled,
+html[data-theme="dark"] button.button-primary:disabled {
+  background: #344F53 !important;
+  color: #9CB7B2 !important;
+  border-color: #486568 !important;
+  box-shadow: none !important;
+  opacity: .72 !important;
+}
+.knowledge-group>summary { list-style: none; }
+.knowledge-group>summary::-webkit-details-marker { display: none !important; }
+.knowledge-group>summary::marker { content: "" !important; font-size: 0; }
+.knowledge-group>summary:after { content: none !important; display: none !important; }
+.knowledge-group[open]>summary:after { content: none !important; display: none !important; }
+
+
+/* v4 checked editor refinements */
+.checked-editor-card .document-editor { width:100%; min-height:330px; height:auto; resize:vertical; padding:14px 12px; line-height:1.65; white-space:pre-wrap; overflow-wrap:anywhere; border-radius:18px; }
+.checked-editor-card .document-editor:focus { outline:2px solid var(--blue-2); outline-offset:2px; }
+.checked-editor-card .is-saved { background:var(--green-soft)!important; color:var(--green)!important; border-color:var(--green)!important; }
+
+
+/* Consistent dark theme across every workspace section */
+html[data-theme="dark"] body,
+html[data-theme="dark"] .app-shell,
+html[data-theme="dark"] .app-main,
+html[data-theme="dark"] .workspace,
+html[data-theme="dark"] .page-wrap { background: var(--bg); color: var(--text); }
+html[data-theme="dark"] .sidebar,
+html[data-theme="dark"] .topbar { background: var(--sidebar); border-color: var(--border); }
+html[data-theme="dark"] .page-panel,
+html[data-theme="dark"] .form-panel,
+html[data-theme="dark"] .result-card,
+html[data-theme="dark"] .template-card,
+html[data-theme="dark"] .source-card,
+html[data-theme="dark"] .finding,
+html[data-theme="dark"] .dropzone,
+html[data-theme="dark"] .file-pill,
+html[data-theme="dark"] .history-row,
+html[data-theme="dark"] .admin-add-form,
+html[data-theme="dark"] .checked-editor-card,
+html[data-theme="dark"] .chat-composer,
+html[data-theme="dark"] .message-bubble,
+html[data-theme="dark"] .knowledge-group,
+html[data-theme="dark"] .rail-disclosure { background: var(--panel); color: var(--text); border-color: var(--border); }
+html[data-theme="dark"] .page-panel,
+html[data-theme="dark"] .form-panel,
+html[data-theme="dark"] .result-card,
+html[data-theme="dark"] .template-card,
+html[data-theme="dark"] .source-card,
+html[data-theme="dark"] .finding,
+html[data-theme="dark"] .dropzone,
+html[data-theme="dark"] .file-pill,
+html[data-theme="dark"] .checked-editor-card { box-shadow: var(--shadow-small); }
+html[data-theme="dark"] .chat-message.user .message-bubble,
+html[data-theme="dark"] .citation,
+html[data-theme="dark"] .source-meta,
+html[data-theme="dark"] .template-foot,
+html[data-theme="dark"] .finding-meta,
+html[data-theme="dark"] .knowledge-count,
+html[data-theme="dark"] .soft-badge,
+html[data-theme="dark"] .file-pill { background-color: var(--panel-soft); color: var(--muted); border-color: var(--border); }
+html[data-theme="dark"] .quick-icon,
+html[data-theme="dark"] .msg-avatar,
+html[data-theme="dark"] .nav-item.active,
+html[data-theme="dark"] .profile-menu:hover { background: var(--blue-soft); color: var(--blue); }
+html[data-theme="dark"] .chat-message.user .message-bubble { background: var(--blue-soft); color: var(--text); }
+html[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select,
+html[data-theme="dark"] .document-editor,
+html[data-theme="dark"] .search-line,
+html[data-theme="dark"] .chat-composer,
+html[data-theme="dark"] .composer-form { background: var(--input); color: var(--text); border-color: var(--border-strong); }
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder { color: var(--muted-2); opacity: 1; }
+html[data-theme="dark"] .document-preview { background: var(--panel-soft) !important; color: var(--text) !important; border: 1px solid var(--border) !important; box-shadow: var(--shadow-small) !important; }
+html[data-theme="dark"] .modal-backdrop { background: rgba(7, 17, 29, .72); }
+html[data-theme="dark"] .modal,
+html[data-theme="dark"] .modal-content,
+html[data-theme="dark"] .modal-top,
+html[data-theme="dark"] .modal-actions { background: var(--panel); color: var(--text); border-color: var(--border); }
+html[data-theme="dark"] .toast { background: #294b52; color: #e6fbf6; border-color: #4d827e; }
+html[data-theme="dark"] .result-content,
+html[data-theme="dark"] .document-editor,
+html[data-theme="dark"] .finding-content,
+html[data-theme="dark"] .finding-title,
+html[data-theme="dark"] .page-heading h1,
+html[data-theme="dark"] .section-head h2,
+html[data-theme="dark"] .result-head h3,
+html[data-theme="dark"] .admin-source-row,
+html[data-theme="dark"] .source-card-body h3,
+html[data-theme="dark"] .template-card h3 { color: var(--text); }
+html[data-theme="dark"] .muted,
+html[data-theme="dark"] .page-heading p,
+html[data-theme="dark"] .source-card-body p,
+html[data-theme="dark"] .admin-source-row span:nth-child(2),
+html[data-theme="dark"] .edited-file-name { color: var(--muted); }
+html[data-theme="dark"] .admin-source-row,
+html[data-theme="dark"] .admin-add-form,
+html[data-theme="dark"] .section-head,
+html[data-theme="dark"] .modal-actions { border-color: var(--border); }
+html[data-theme="dark"] .editor-extract-hint { color: #d4c9a4; background: #443d2f; border-color: #746448; }
+html[data-theme="dark"] .checked-editor-card .document-editor { background: #1e3349; color: #edf5ff; border-color: #58718d; }
+html[data-theme="dark"] .button-quiet { color: var(--muted); }
+html[data-theme="dark"] .button-quiet:hover { background: var(--panel-soft); color: var(--text); }
+@media(max-width:760px){html[data-theme="dark"] .sidebar{background:var(--sidebar)}}
+
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <div class="site-logo" aria-label="VisariumAI" title="VisariumAI"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2 20 7.5v5.2c0 4-3.3 6.9-8 8.2-4.7-1.3-8-4.2-8-8.2V7.5l8-4.3Z"/><path d="M8 10.2h8M8 13.5h5M10 7.1v2.2M14 14.7v2.2"/></svg></div>
+  <aside class="sidebar collapsed" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark" aria-label="VisariumAI" title="VisariumAI">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 20 7.5v5.2c0 4-3.3 6.9-8 8.2-4.7-1.3-8-4.2-8-8.2V7.5l8-4.3Z"/><path d="M8 10.2h8M8 13.5h5M10 7.1v2.2M14 14.7v2.2"/></svg>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Рабочее пространство" aria-label="Развернуть рабочее пространство"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    </div>
+    <button class="new-chat" id="newChatBtn" title="Новый диалог"><span class="plus">＋</span><span class="new-chat-label">Новый диалог</span></button>
+    <div class="nav-label">Рабочее пространство</div>
+    <nav class="nav-group" aria-label="Рабочее пространство">
+      <button class="nav-item active" data-page="chat" title="Диалог"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/></svg><span>Диалог</span></button>
+      <button class="nav-item" data-page="create" title="Создать документ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9Z"/><path d="M13 3v7h7M12 13v6M9 16h6"/></svg><span>Создать документ</span></button>
+      <button class="nav-item" data-page="check" title="Проверить документ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M13 3v7h7M8 14l2.2 2.2L20.5 6"/></svg><span>Проверить документ</span></button>
+      <button class="nav-item" data-page="knowledge" title="База знаний"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21Z"/><path d="M4 5.5v13A2.5 2.5 0 0 1 6.5 16H20M8 7h8M8 10h6"/></svg><span>База знаний</span></button>
+      <button class="nav-item" data-page="templates" title="Модули документов"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg><span>Модули документов</span></button>
+      <button class="nav-item" data-page="history" title="История"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/><path d="M4 4.5 2.5 8 6 8"/></svg><span>История</span></button>
+      <button class="nav-item admin-only" data-page="admin" title="Управление базой" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.7 2.9-.2-.1a1.7 1.7 0 0 0-1.9.3l-.1.1h-3.4l-.1-.2a1.7 1.7 0 0 0-1.5-1l-.2.1-3-1.7.1-.2a1.7 1.7 0 0 0-.3-1.9l-.1-.1v-3.4l.2-.1a1.7 1.7 0 0 0 1-1.5l-.1-.2 1.7-3 .2.1a1.7 1.7 0 0 0 1.9-.3l.1-.1h3.4l.1.2a1.7 1.7 0 0 0 1.5 1l.2-.1 3 1.7-.1.2a1.7 1.7 0 0 0 .3 1.9l.1.1V15Z"/></svg><span>Управление базой</span></button>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <div class="profile"><div class="avatar">П</div><div class="profile-copy"><div class="profile-name" id="profileName">Пользователь</div><div class="profile-role" id="profileRole">Стандартный доступ</div></div><button class="profile-menu" id="profileInfo" aria-label="Роль и доступ" title="Роль и доступ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button></div>
+  </aside>
+  <main class="app-main">
+    <header class="topbar">
+      <div class="topbar-left"><button class="mobile-menu" id="mobileMenu" aria-label="Открыть рабочее пространство"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></div>
+      <div class="topbar-right"><button class="theme-toggle icon-only" id="themeToggle" aria-label="Переключить тему" title="Переключить тему"><svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></svg></button></div>
+    </header>
+    <div class="workspace" id="workspace"></div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="modalRoot"></div>
+<script>
+const ICONS={
+  sparkles:'<path d="m12 3 1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3Z"/><path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14Z"/>',
+  chat:'<path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/>',
+  file:'<path d="M13 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10Z"/><path d="M13 3v7h7M8 14h8M8 17h6"/>',
+  plusfile:'<path d="M13 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9Z"/><path d="M13 3v7h7M12 13v6M9 16h6"/>',
+  checkfile:'<path d="M13 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M13 3v7h7M8 14l2.2 2.2L20.5 6"/>',
+  book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21Z"/><path d="M4 5.5v13A2.5 2.5 0 0 1 6.5 16H20M8 7h8M8 10h6"/>',
+  grid:'<rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+  arrow:'<path d="M7 17 17 7M7 7h10v10"/>',
+  right:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  down:'<path d="m6 9 6 6 6-6"/>',
+  search:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
+  send:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+  paperclip:'<path d="m21.5 11.5-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7L9.9 17.5a2 2 0 0 1-2.8-2.8l8.5-8.5"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/>',
+  moon:'<path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"/>',
+  close:'<path d="m18 6-12 12M6 6l12 12"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+  shield:'<path d="m12 3 8 4.2v5.2c0 4-3.3 6.9-8 8.2-4.7-1.3-8-4.2-8-8.2V7.2L12 3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/>',
+  download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',
+  upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>',
+  alert:'<path d="M10.3 3.9 2.6 17.2A2 2 0 0 0 4.3 20h15.4a2 2 0 0 0 1.7-2.8L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/>',
+  check:'<path d="m5 12 4 4L19 6"/>',
+  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+  clipboard:'<rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 5V3h6v2M8 11h8M8 15h6"/>',
+  list:'<path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/>',
+  refresh:'<path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.6 9A7 7 0 0 1 17 6l3 6M4 12l3 6a7 7 0 0 0 11.4-3"/>',
+  folder:'<path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M3 10h18"/>',
+  more:'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
+  external:'<path d="M14 3h7v7M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
+  fileSearch:'<path d="M13 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8"/><path d="M13 3v7h7M8 14h4"/><circle cx="18" cy="18" r="3"/><path d="m20.2 20.2 1.3 1.3"/>',
+};
+const icon=(name,cls='')=>`<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]||ICONS.file}</svg>`;
+const templates=[
+ {id:'audit',name:'Распоряжение о проведении внутреннего аудита',short:'Внутренний аудит',desc:'Назначение аудита процесса, формирование группы и контроль результатов.',icon:'clipboard',tag:'Распоряжение',fields:[['basis','Основание для аудита','Годовой план внутреннего аудита или поручение',1],['process','Проверяемый процесс','Например: подготовка и согласование документов',1],['dates','Период аудита','Например: с 24.10.2026 по 25.10.2026',1],['leader','Руководитель аудиторской группы','Должность, подразделение, Фамилия И. О.',1],['auditors','Аудиторы','Укажите участников аудиторской группы',1],['reportTo','Кому представить отчёт','Должность или подразделение',1]]},
+ {id:'docflow',name:'Приказ о назначении ответственных за ДОУ',short:'Ответственные за ДОУ',desc:'Назначение ответственных за делопроизводство и документооборот.',icon:'users',tag:'Приказ',fields:[['basis','Нормативная основа','Название инструкции или локального документа',1],['unit1','Подразделение 1','Официальное наименование подразделения',1],['person1','Ответственный 1','Должность, инициалы и фамилия',1],['unit2','Подразделение 2','Официальное наименование подразделения',0],['person2','Ответственный 2','Должность, инициалы и фамилия',0],['coordinator','Координатор ДОУ','Подразделение, осуществляющее методическое сопровождение',1]]},
+ {id:'regulation',name:'Приказ об утверждении локального документа',short:'Утверждение документа',desc:'Утверждение положения, правил, регламента, порядка или инструкции.',icon:'file',tag:'Приказ',fields:[['purpose','Цель принятия','Почему вводится документ',1],['documentName','Наименование документа','Полное название утверждаемого документа',1],['effectiveDate','Дата введения в действие','ДД.ММ.ГГГГ',1],['responsibleUnit','Ответственное подразделение','Кто организует ознакомление и размещение',1],['resource','Место размещения','Например: внутренний портал или СЭД',1],['control','Контроль исполнения','Должность и Фамилия И. О. либо «оставляю за собой»',1]]},
+ {id:'handover',name:'Приказ о приёме и передаче дел и имущества',short:'Приём-передача дел',desc:'Фиксация сдачи и приёма документов, имущества и средств доступа.',icon:'folder',tag:'Приказ',fields:[['reason','Основание','Назначение, перевод, освобождение или реорганизация',1],['handing','Кто сдаёт дела','Должность, подразделение, Фамилия И. О.',1],['receiving','Кто принимает дела','Должность, подразделение, Фамилия И. О.',1],['items','Что передаётся','Документы, имущество, носители и доступы; можно указать акт',1],['representative','Представитель организации','Должность, подразделение, Фамилия И. О.',1],['deadline','Срок передачи','ДД.ММ.ГГГГ или период',1]]},
+ {id:'system',name:'Приказ о вводе в эксплуатацию информационной системы',short:'Ввод информационной системы',desc:'Ввод системы или компонента при наличии документа о готовности.',icon:'grid',tag:'Приказ',fields:[['systemName','Наименование системы или компонента','Полное официальное наименование',1],['shortName','Сокращённое название','Короткое название без неоднозначности',1],['readiness','Документ о готовности','Вид, дата и номер протокола или акта',1],['specification','Документ-основание работ','ТЗ, спецификация или заявка с реквизитами',1],['effectiveDate','Дата ввода в эксплуатацию','Не раньше даты документа о готовности',1],['owner','Функциональный заказчик','Подразделение — владелец бизнес-процесса',1],['purpose','Назначение системы','Какие задачи выполняет подразделение',1]]},
+ {id:'group',name:'Распоряжение о создании рабочей группы',short:'Рабочая группа',desc:'Формирование временной группы с задачей, сроком и ожидаемым результатом.',icon:'users',tag:'Распоряжение',fields:[['goal','Цель создания группы','Практическая цель',1],['subject','Предмет работы','Краткая тема, одинаковая в заголовке и пункте 1',1],['leader','Руководитель группы','Должность, подразделение, Фамилия И. О.',1],['secretary','Секретарь группы','Должность, подразделение, Фамилия И. О.',1],['members','Члены группы','Перечислите участников',1],['deadline','Срок выполнения','ДД.ММ.ГГГГ или период',1],['result','Ожидаемый результат','Проект, отчёт, заключение или план мероприятий',1]]}
+];
+const sources=[
+ {name:'Инструкция по документационному обеспечению управления и документообороту',sub:'Инструкция по ДОУ',status:'Вступает в силу 01.11.2026',desc:'Базовый источник по подготовке, согласованию, визированию, подписанию, регистрации и работе с модульными документами.',type:'PDF',key:'инструкция доу документооборот согласование визирование подпись регистрация 10.3 10.6'},
+ {name:'Матрица обязательного визирования',sub:'Внутренние и внешние документы',status:'Статус в реестре не подтверждён',desc:'Условия обязательного визирования по видам документов и компетенции подразделений.',type:'DOCX',key:'матрица визирования юридическое кадровое доу it информационная безопасность'},
+ {name:'Методические рекомендации по работе с модульными документами',sub:'Порядок подготовки проекта',status:'Статус в реестре не подтверждён',desc:'Проверка версии модуля, регистрационная карточка проекта, оформление, согласование и сохранение зон служебных реквизитов.',type:'DOCX',key:'модуль шаблон версия актуальность карточка проекта оформление'},
+ {name:'Модуль: распоряжение о проведении внутреннего аудита',sub:'TMP-01 · Распоряжение',status:'Статус в реестре не подтверждён',desc:'Основание, период и процесс аудита, состав группы, отчёт, план мероприятий и контроль.',type:'DOCX',key:'аудит внутренний группа отчёт распоряжение'},
+ {name:'Модуль: приказ о назначении ответственных за ДОУ',sub:'TMP-02 · Приказ',status:'Статус в реестре не подтверждён',desc:'Назначение ответственных по подразделениям, замещение на период отсутствия и координация.',type:'DOCX',key:'назначение ответственных делопроизводство документооборот приказ'},
+ {name:'Модуль: утверждение локального документа',sub:'TMP-03 · Приказ',status:'Статус в реестре не подтверждён',desc:'Утверждение локального документа, дата введения, ознакомление сотрудников и место размещения.',type:'DOCX',key:'утверждение локальный документ приказ положение регламент'},
+ {name:'Модуль: приём и передача дел и имущества',sub:'TMP-04 · Приказ',status:'Статус в реестре не подтверждён',desc:'Передающие и принимающие лица, состав имущества, представитель и срок передачи.',type:'DOCX',key:'передача дела имущество акт прием приемка доступ'},
+ {name:'Модуль: ввод в эксплуатацию информационной системы',sub:'TMP-05 · Приказ',status:'Статус в реестре не подтверждён',desc:'Документ о готовности, полное и сокращённое название, дата ввода, заказчик и назначение системы.',type:'DOCX',key:'ввод эксплуатацию информационная система компонент дата готовность'},
+ {name:'Модуль: распоряжение о создании рабочей группы',sub:'TMP-06 · Распоряжение',status:'Статус в реестре не подтверждён',desc:'Цель, состав, руководитель, секретарь, срок, ожидаемый результат и условие завершения работы.',type:'DOCX',key:'рабочая группа распоряжение состав участники срок результат'},
+
+ ,{name:'Кейс ЦДОБР — презентация задачи',sub:'Материалы кейса',status:'Доступен',desc:'Описание задачи, функций интеллектуального помощника, ограничений, обязательных артефактов и критериев оценки.',type:'PDF',key:'кейс цдоб р презентация интеллектуальный помощник требования артефакты критерии оценки',category:'Материалы кейса'}
+ ,{name:'Кейс ЦДОБР — краткое содержание встречи',sub:'Материалы кейса',status:'Доступен',desc:'Краткое содержание обсуждения сценариев, функций помощника, проверки документов и требований к защите проекта.',type:'DOCX',key:'кейс цдоб р встреча менторы чат бот функциональные требования пользовательские сценарии',category:'Материалы кейса'}
+ ,{name:'Кейс ЦДОБР — дополнительная копия презентации',sub:'Материалы кейса',status:'Копия сохранена',desc:'Дополнительная копия исходных материалов кейса, сохранённая в перечне источников.',type:'PDF',key:'дополнительная копия презентации кейс цдоб р',category:'Материалы кейса'}
+];
+const PAGE_LABELS={chat:'Диалог',create:'Создать документ',check:'Проверить документ',knowledge:'База знаний',templates:'Модули документов',history:'История',admin:'Управление базой'};
+let customKnowledgeSections=[];
+let currentRole='user',currentPage='chat',chatMessages=[],historyItems=[
+ {type:'chat',title:'Как согласовать приказ о вводе ИС?',sub:'Диалог',prompt:'Как согласовать приказ о вводе информационной системы в эксплуатацию?'},
+ {type:'create',title:'Распоряжение о создании рабочей группы',sub:'Создан документ',templateId:'group'},
+ {type:'check',title:'Проверка проекта приказа',sub:'Проверка документа'}
+],selectedTemplate=null,currentDraft=null,attachedFile=null,checkedDocumentText='',checkResult=false,toastTimer;
+const workspace=document.getElementById('workspace');
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function showToast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3200)}
+function setTheme(theme){document.documentElement.dataset.theme=theme;try{localStorage.setItem('cdobr-theme',theme)}catch(e){}const dark=theme==='dark';const iconEl=document.getElementById('themeIcon');if(iconEl)iconEl.innerHTML=ICONS[dark?'moon':'sun'];const themeColor=document.querySelector('meta[name="theme-color"]');if(themeColor)themeColor.content=dark?'#1c2c42':'#f4f7fc';const toggle=document.getElementById('themeToggle');if(toggle){toggle.title=dark?'Переключить на светлую тему':'Переключить на тёмную тему';toggle.setAttribute('aria-label',toggle.title)}}
+function initTheme(){const fallback=document.documentElement.dataset.theme==='dark'?'dark':'light';let chosen=fallback;try{if(location.pathname.endsWith('prototype_cdobr.html'))chosen=localStorage.getItem('cdobr-theme')||fallback}catch(e){}setTheme(chosen)}
+function setPage(page){if(!PAGE_LABELS[page])return;if(page==='admin'&&currentRole!=='admin')page='chat';currentPage=page;document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.page===page));document.getElementById('sidebar').classList.remove('open');renderPage()}
+function goTo(page){setPage(page)}
+function heading(eyebrow,title,desc,badge=''){return `<div class="page-heading"><h1>${title}</h1></div>`}
+function railAction(i,title,desc,page){return `<button class="rail-action" data-go="${page}"><span class="quick-icon">${icon(i)}</span><span><strong>${title}</strong></span>${icon('right')}</button>`}
+function initTheme(){setTheme(document.documentElement.dataset.theme==='dark'?'dark':'light')}
+function setPage(page){if(!PAGE_LABELS[page])return;if(page==='admin'&&currentRole!=='admin')page='chat';currentPage=page;document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.page===page));document.getElementById('sidebar').classList.remove('open');renderPage()}
+function goTo(page){setPage(page)}
+function heading(eyebrow,title,desc,badge=''){return `<div class="page-heading"><h1>${title}</h1></div>`}
+function railAction(i,title,desc,page){return `<button class="rail-action" data-go="${page}"><span class="quick-icon">${icon(i)}</span><span><strong>${title}</strong></span>${icon('right')}</button>`}
+function renderChat(){
+ const welcome=chatMessages.length===0?`<div class="welcome-block" id="welcome"><h2>Чем помочь с документами?</h2><div class="mode-switcher"><button class="mode-chip" data-prompt="Как определить обязательные согласующие для приказа о вводе информационной системы в эксплуатацию?">${icon('search')} Найти ответ</button><button class="mode-chip" data-go="create">${icon('plusfile')} Создать документ</button><button class="mode-chip" data-go="check">${icon('checkfile')} Проверить документ</button></div><div class="starter-prompts"><button class="starter-prompt" data-prompt="Кто должен визировать приказ о вводе информационной системы в эксплуатацию?">${icon('users')} Кто визирует приказ о вводе ИС?</button><button class="starter-prompt" data-prompt="Какие реквизиты нужно заполнить в распоряжении о создании рабочей группы?">${icon('fileSearch')} Какие реквизиты нужны для распоряжения?</button><button class="starter-prompt" data-prompt="Как проверить актуальность модуля документа?">${icon('book')} Как проверить актуальность модуля?</button></div></div>`:'';
+ const messages=chatMessages.map(m=>`<div class="chat-message ${m.role==='user'?'user':''}"><div class="msg-avatar">${icon(m.role==='user'?'chat':'sparkles')}</div><div class="message-body"><div class="message-bubble">${m.html}</div>${m.citations?.length?`<div class="citation-row">${m.citations.map(c=>`<button class="citation" data-preview-citation="${esc(c)}">${icon('file')} ${esc(c)}</button>`).join('')}</div>`:''}${m.role==='assistant'?`<div class="message-actions"><button class="text-action" data-copy-message="${esc(m.plain||'')}">${icon('clipboard')} Копировать</button><button class="text-action" data-go="knowledge">${icon('book')} Источники</button></div>`:''}</div></div>`).join('');
+ return `<section class="content-grid"><div class="conversation-column">${welcome}<div class="chat-stream" id="chatStream">${messages}</div><div class="chat-composer"><form class="composer-form" id="chatForm"><textarea id="chatInput" placeholder="Спросите об инструкции или документе…" rows="1" aria-label="Ваш вопрос"></textarea><div class="composer-bottom"><button class="send-button" type="submit" aria-label="Отправить сообщение">${icon('send')}</button></div></form></div></div><aside class="right-rail"><details class="rail-disclosure"><summary>${icon('sparkles')} Инструменты</summary><div class="rail-disclosure-body">${railAction('plusfile','Создать документ','','create')}${railAction('checkfile','Проверить документ','','check')}${railAction('book','Поиск по инструкции','','knowledge')}${railAction('grid','Модули документов','','templates')}</div></details><details class="rail-disclosure"><summary>${icon('book')} Материалы</summary><div class="rail-disclosure-body"><button class="source-mini source-jump" data-go="knowledge"><span class="doc-icon">${icon('file')}</span><span><span class="source-title">Инструкция по ДОУ</span></span></button><button class="source-mini source-jump" data-go="knowledge"><span class="doc-icon">${icon('list')}</span><span><span class="source-title">Матрица визирования</span></span></button><button class="source-mini source-jump" data-go="templates"><span class="doc-icon">${icon('grid')}</span><span><span class="source-title">6 модулей</span></span></button></div></details></aside></section>`;
+}
+function renderCreate(){if(selectedTemplate)return renderTemplateForm(selectedTemplate);return `<div class="page-wrap">${heading('','Создать документ')}<div class="page-panel"><div class="template-grid">${templates.map(t=>`<button class="template-card" data-template="${t.id}"><span class="quick-icon">${icon(t.icon)}</span><h3>${esc(t.name)}</h3><div class="template-foot"><span>${t.tag}</span>${icon('arrow')}</div></button>`).join('')}</div></div></div>`}
+function renderTemplateForm(id){const t=templates.find(x=>x.id===id);if(!t){selectedTemplate=null;return renderCreate()}return `<div class="page-wrap">${heading('',t.short)}<div class="form-layout single"><form class="form-panel" id="templateForm"><div class="form-fields">${t.fields.map(([key,label,placeholder,required])=>`<div class="field ${['items','goal','purpose','result','members'].includes(key)?'full':''}"><label for="f-${key}">${esc(label)} ${required?'<span class="required">*</span>':''}</label>${['items','goal','purpose','result','members'].includes(key)?`<textarea id="f-${key}" name="${key}" placeholder="${esc(placeholder)}" ${required?'required':''}></textarea>`:`<input id="f-${key}" name="${key}" type="text" placeholder="${esc(placeholder)}" ${required?'required':''}>`}</div>`).join('')}</div><div class="form-actions"><button class="button-quiet" type="button" data-action="back-templates">${icon('right')} Назад</button><button class="button-primary" type="submit">Создать документ ${icon('right')}</button></div></form></div><div id="draftResult"></div></div>`}
+function renderTemplates(){return `<div class="page-wrap">${heading('','Модули документов')}<div class="page-panel"><div class="template-grid">${templates.map(t=>`<button class="template-card" data-template="${t.id}"><span class="quick-icon">${icon(t.icon)}</span><h3>${esc(t.name)}</h3><div class="template-foot"><span>${t.tag}</span>${icon('arrow')}</div></button>`).join('')}</div></div></div>`}
+function renderCheck(){return `<div class="page-wrap">${heading('','Проверить документ')}<div class="page-panel"><div class="dropzone" id="dropzone"><input type="file" id="fileInput" accept=".docx,.pdf,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Выбрать документ"><div class="upload-icon">${icon('upload')}</div><h3>Добавить документ</h3><button class="button-secondary" type="button" id="browseFileBtn">${icon('folder')} Выбрать файл</button></div><div id="selectedFile"></div><div class="checker-controls"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="button-secondary" type="button" id="exampleCheckBtn">Пример проверки</button><button class="button-primary" type="button" id="runCheckBtn" ${attachedFile?'':'disabled'} style="opacity:${attachedFile?'1':'.55'}">${icon('checkfile')} Проверить</button></div></div></div><div id="checkResults"></div></div>`}
+function renderCheckResults(){return `<div class="result-card"><div class="result-head"><h3>Результат проверки</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="soft-badge">${icon('info')} 3 замечания</span><button class="button-primary" id="editCheckedDocumentBtn">Редактировать документ</button></div></div><div class="finding-list"><div class="finding"><div class="finding-mark error">${icon('alert')}</div><div class="finding-content"><div class="finding-title">Не заполнены реквизиты</div><p>Проверьте основание издания, обязательные сведения и сроки.</p><div class="finding-meta"><span>Высокая критичность</span><span>Обязательные поля</span></div></div><span class="finding-status">Проверить</span></div><div class="finding"><div class="finding-mark warning">${icon('alert')}</div><div class="finding-content"><div class="finding-title">Уточните маршрут визирования</div><p>Для приказов по информационным системам учитываются юридическое подразделение, ДОУ, а также ИБ и ИТ по условиям Матрицы.</p><div class="finding-meta"><span>Средняя критичность</span><span>Матрица, строка 3</span></div></div><span class="finding-status">Уточнить</span></div><div class="finding"><div class="finding-mark info">${icon('info')}</div><div class="finding-content"><div class="finding-title">Проверьте статус модуля</div><p>Сверьте редакцию, владельца и дату начала применения с реестром модулей.</p><div class="finding-meta"><span>Информация</span><span>Методические рекомендации, п. 1.2</span></div></div><span class="finding-status">Подтвердить</span></div></div></div>`}
+function renderKnowledge(){return `<div class="page-wrap">${heading('','База знаний')}<div class="section-head knowledge-search-head"><div class="search-line">${icon('search')}<input id="sourceSearch" type="search" placeholder="Поиск по файлам и содержанию…" aria-label="Поиск в базе знаний"></div></div><div class="knowledge-groups" id="sourceGrid">${renderSourceGroups(sources,false)}</div></div>`}
+function sourceCategory(s){if(s.category)return s.category;if(s.name.startsWith('Модуль:'))return 'Модули документов';if(s.name.includes('Матрица')||s.name.includes('Методические'))return 'Матрицы и методические материалы';return 'Инструкции и регламенты'}
+function renderSourceGroups(list,expandMatches=false){if(!list.length)return `<div class="empty-state"><b>Ничего не найдено</b></div>`;const order=[...new Set(['Инструкции и регламенты','Матрицы и методические материалы','Модули документов','Материалы кейса',...customKnowledgeSections,...list.map(sourceCategory)])];return order.map(cat=>{const items=list.filter(s=>sourceCategory(s)===cat);return items.length?`<details class="knowledge-group" ${expandMatches?'open':''}><summary><span>${esc(cat)}</span><span class="knowledge-count">${items.length}</span></summary><div class="source-grid">${renderSourceCards(items)}</div></details>`:''}).join('')}
+function renderSourceCards(list){if(!list.length)return '';return list.map(s=>`<article class="source-card"><div class="doc-icon">${icon('file')}</div><div class="source-card-body"><h3>${esc(s.name)}</h3><div class="source-meta"><span class="source-type">${esc(s.type||'Файл')}</span><button class="source-open" data-source="${sources.indexOf(s)}" aria-label="Открыть ${esc(s.name)}">Открыть ${icon('arrow')}</button></div></div></article>`).join('')}
+function renderHistory(){return `<div class="page-wrap">${heading('','История')}<div class="page-panel"><div class="section-head"><h2>Недавние действия</h2><button class="button-secondary" id="clearHistoryBtn">${icon('refresh')} Очистить историю</button></div><div class="history-list">${historyItems.length?historyItems.map((h,i)=>`<div class="history-row"><div class="history-icon">${icon(h.type==='create'?'plusfile':h.type==='check'?'checkfile':h.type==='knowledge'?'book':'chat')}</div><div class="history-main"><strong>${esc(h.title)}</strong></div><button data-history="${i}">Открыть ${icon('arrow')}</button></div>`).join(''):`<div class="empty-state"><span class="quick-icon">${icon('clock')}</span><b>История пуста</b></div>`}</div></div></div>`}
+function renderPage(){selectedTemplate=currentPage==='create'?selectedTemplate:null;workspace.innerHTML=currentPage==='chat'?renderChat():currentPage==='create'?renderCreate():currentPage==='check'?renderCheck():currentPage==='knowledge'?renderKnowledge():currentPage==='templates'?renderTemplates():currentPage==='admin'?renderAdmin():renderHistory();wireDynamic();}
+function renderAdmin(){if(currentRole!=='admin')return renderChat();const cats=[...new Set([...sources.map(sourceCategory),...customKnowledgeSections])];return `<div class="page-wrap">${heading('','Управление базой')}<div class="page-panel"><div class="admin-section-tools"><input id="newKnowledgeSection" placeholder="Название нового раздела"><button class="button-primary" id="addKnowledgeSectionBtn">Добавить раздел</button></div><form class="admin-add-form" id="addSourceForm"><h2>Добавить файл</h2><div class="form-fields"><div class="field full"><label for="adminFile">Файл</label><input id="adminFile" name="adminFile" type="file" accept=".pdf,.docx,.doc" required></div><div class="field"><label for="adminCategory">Раздел</label><select id="adminCategory" name="adminCategory">${cats.map(c=>`<option>${esc(c)}</option>`).join('')}</select></div><div class="field"><label for="adminStatus">Статус</label><select id="adminStatus" name="adminStatus"><option>Статус в реестре не подтверждён</option><option>Вступает в силу 01.11.2026</option><option>Неактуален</option></select></div></div><button class="button-primary" type="submit">Добавить в базу</button></form><div class="admin-source-list"><h2>Файлы базы знаний</h2>${sources.map((src,i)=>`<div class="admin-source-row"><span>${esc(src.name)}</span><span>${esc(sourceCategory(src))}</span><button class="button-secondary" data-edit-source="${i}">Редактировать</button><button class="button-quiet" data-deactivate-source="${i}">${src.status==='Неактуален'?'Неактуален':'Деактивировать'}</button></div>`).join('')}</div></div></div>`}
+function buildAnswer(question){const q=question.toLowerCase();if(q.includes('ввод')&&(q.includes('ис')||q.includes('информацион')||q.includes('эксплуатац'))){return {html:`<p>Для учебного кейса по приказу о вводе в эксплуатацию информационной системы маршрут нужно определять по <b>виду и содержанию проекта</b>, а также по Матрице обязательного визирования.</p><ul><li><b>Юридическое подразделение</b> — обязательная виза по соответствующей строке Матрицы.</li><li><b>Департамент ДОУ</b> — обязательная виза.</li><li><b>Департамент информационной безопасности</b> и <b>Департамент информационных технологий</b> — должны быть учтены для документа по информационной системе в соответствии с содержанием строки 3 Матрицы.</li></ul><p>Затем сохраняется установленная последовательность визирования: исполнитель, участники разработки, руководитель подразделения, заинтересованные подразделения, подразделения обязательного визирования, юридическое подразделение (если обязательно), ДОУ (если обязательно), координирующее должностное лицо.</p><p>Это ответ по предоставленным учебным материалам; окончательный маршрут следует сверить с актуальной редакцией Матрицы и компетенциями затронутых подразделений.</p>`,plain:'Для приказа о вводе в эксплуатацию ИС маршрут определяется по виду и содержанию проекта и Матрице. Учитываются обязательные юридическое подразделение и Департамент ДОУ, а также ИБ и ИТ для информационной системы. Точная маршрутизация проверяется по действующей Матрице.',citations:['Матрица обязательного визирования · строка 3','Инструкция по ДОУ · пп. 10.6, 10.11']};}
+ if(q.includes('распоряж')&&(q.includes('срок')||q.includes('рабоч')))return {html:`<p>В предоставленном учебном примере Инструкции по ДОУ в пункте 10.3 указан максимальный срок каждого первичного и повторного рассмотрения <b>распоряжения — 3 рабочих дня</b> со дня поступления документа в подразделение через ИИС ДО.</p><p>Это срок рассмотрения одного этапа, а не гарантия, что весь маршрут согласования завершится за 3 дня: общий график зависит от последовательности процедур и числа согласующих.</p>`,plain:'По п. 10.3 Инструкции по ДОУ максимальный срок каждого первичного или повторного рассмотрения распоряжения — 3 рабочих дня со дня поступления через ИИС ДО.',citations:['Инструкция по ДОУ · п. 10.3, стр. 42']};
+ if(q.includes('модул')||q.includes('шаблон')||q.includes('актуальн'))return {html:`<p>Перед использованием модульного документа необходимо проверить его сведения в реестре актуальных модулей: <b>наименование, регистрационные данные, дату, редакцию, владельца, статус и начало применения</b>.</p><p>Если проект полностью соответствует утверждённому модулю, повторное полное согласование с подразделениями, согласовавшими сам модуль, может не требоваться. При этом лингвистическая экспертиза, визирование ДОУ и другие обязательные процедуры сохраняются. Если меняются постоянные формулировки, обязательные пункты или смысл решения, нужен полный маршрут согласования.</p><p>В загруженных учебных материалах реестровые метаданные каждого модуля не представлены, поэтому их актуальность здесь подтверждённой не считается.</p>`,plain:'Актуальность модуля подтверждается только по реестру: наименование, регистрационные данные, дата, редакция, владелец, статус и начало применения. Если метаданных нет, статус не подтверждён.',citations:['Методические рекомендации · пп. 1.2–1.3','Инструкция по ДОУ · пп. 9.16.1–9.16.3']};
+ if(q.includes('передач')||q.includes('имуще')||q.includes('дел и'))return {html:`<p>Для приказа о приёме и передаче дел и имущества используйте соответствующий модуль. В нём должны быть указаны основание, лицо или подразделение, сдающее дела, принимающая сторона, состав передаваемых дел и имущества, представитель организации, срок и ответственный за контроль.</p><p>Если передача связана с предоставлением, изменением или прекращением доступа к информационным системам, проект дополнительно визирует Департамент информационной безопасности — это условие прямо отражено в Матрице.</p>`,plain:'В приказе о приёме и передаче дел укажите основание, сдающую и принимающую стороны, перечень имущества и документов, представителя, срок и контроль. При изменении доступа к информационным системам включается ИБ.',citations:['Модуль приказа о приёме и передаче дел · примечания 1–8','Матрица обязательного визирования · строка 2']};
+ if(q.includes('подпис')||q.includes('регистрац'))return {html:`<p>Согласно пунктам 10.1–10.2 Инструкции по ДОУ, стандартный процесс включает подготовку проекта, внутреннее согласование, первичное рассмотрение заинтересованными подразделениями, согласование и визирование, лингвистическую экспертизу (когда обязательна), визирование координирующего лица, подписание и регистрацию.</p><p>Регистрационный номер подписываемого документа не присваивается до подписания и направления на регистрацию. Завизированная и подписываемая версии должны совпадать; существенные изменения после согласования требуют повторного рассмотрения и визирования.</p>`,plain:'Процесс: подготовка, внутреннее согласование, первичное рассмотрение, согласование и визирование, обязательная лингвистическая экспертиза, виза координирующего лица, подписание, регистрация. Номер до подписания и регистрации не присваивается.',citations:['Инструкция по ДОУ · пп. 10.1–10.2','Методические рекомендации · пп. 5.1–5.3']};
+ return {html:`<p>Я не нашёл достаточно подтверждённых сведений в базе знаний, чтобы ответить уверенно.</p><p>Чтобы дать точный ответ, уточните <b>тип документа</b> и задачу: подготовка, оформление, согласование, визирование, подписание или регистрация. Можно также открыть базу знаний и поискать конкретный пункт инструкции.</p><p>Я не буду придумывать требования, которых нет в доступных источниках.</p>`,plain:'В базе знаний не найдено достаточно данных для уверенного ответа. Нужны тип документа и уточнение процесса; не следует придумывать требования.',citations:['База знаний · требуется уточнение']};}
+function sendChat(question){const q=question.trim();if(!q)return;chatMessages.push({role:'user',html:esc(q).replace(/\n/g,'<br>'),plain:q});const pending={role:'assistant',html:'<p>Ищу подтверждённые положения в базе знаний…</p>',plain:'Ищу источники…',citations:[]};chatMessages.push(pending);renderPage();const stream=document.getElementById('chatStream');if(stream)stream.scrollTop=stream.scrollHeight;fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q})}).then(async r=>{const data=await r.json();if(!r.ok)throw new Error(data.error||'Ошибка сервера');pending.plain=data.answer||'Ответ не получен.';pending.html=formatAssistantAnswer(pending.plain);pending.citations=data.sources||[];}).catch(err=>{pending.plain='Не удалось связаться с сервером VisariumAI. Убедитесь, что приложение запущено через Go-сервер.';pending.html='<p>'+esc(pending.plain)+'</p>';pending.citations=[];showToast('Ошибка подключения к серверу')}).finally(()=>{addHistory({type:'chat',title:q.length>60?q.slice(0,57)+'…':q,sub:'Только что · Диалог с помощником',prompt:q});renderPage();const st=document.getElementById('chatStream');if(st)st.scrollTop=st.scrollHeight;});}
+function formatAssistantAnswer(text){return String(text||'').split(/\n\n+/).map(p=>'<p>'+esc(p).replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<b>$1</b>')+'</p>').join('')}
+function buildDraft(t,values){return buildOfficialLines(t,values,{organization:'НАИМЕНОВАНИЕ ОРГАНИЗАЦИИ',date:'',regNo:'',signer:''}).map(x=>x.text).join('\n')}
+function fieldValue(values,key){return String(values[key]||'').trim()}
+function valueOrBlank(values,key){return fieldValue(values,key)||'________________________'}
+function buildOfficialLines(t,values,meta={}){
+ const v=values||{};const org=(meta.organization||'НАИМЕНОВАНИЕ ОРГАНИЗАЦИИ').trim()||'НАИМЕНОВАНИЕ ОРГАНИЗАЦИИ';
+ const kind=['audit','group'].includes(t.id)?'РАСПОРЯЖЕНИЕ':'ПРИКАЗ';
+ const date=(meta.date||'').trim()||'«___» ____________ 20___ г.';const no=(meta.regNo||'').trim()||'________';
+ let title='',pre='',action='ПРИКАЗЫВАЮ:',body=[];
+ if(t.id==='audit'){
+  action='ОБЯЗЫВАЮ:';title='О проведении внутреннего аудита процесса '+valueOrBlank(v,'process');pre='В соответствии с '+valueOrBlank(v,'basis')+', в целях оценки результативности процессов и управления связанными с ними рисками,';
+  body=['1. Провести '+valueOrBlank(v,'dates')+' внутренний аудит процесса '+valueOrBlank(v,'process')+'.','2. В ходе аудита оценить соответствие установленным требованиям и внутренним документам, результативность контрольных процедур и управление рисками, полноту и достоверность документирования операций.','3. Утвердить состав аудиторской группы:','Руководитель — '+valueOrBlank(v,'leader'),'Аудиторы — '+valueOrBlank(v,'auditors'),'4. Руководителю аудиторской группы представить '+valueOrBlank(v,'reportTo')+' отчет о результатах аудита.','5. Подразделению — владельцу процесса подготовить план мероприятий по результатам аудита.','6. Контроль за исполнением настоящего распоряжения возложить на ________________________.'];
+ } else if(t.id==='docflow'){
+  title='О назначении ответственных за делопроизводство и документооборот';pre='В целях организации делопроизводства и соблюдения требований '+valueOrBlank(v,'basis')+',';
+  body=['1. Назначить ответственными за делопроизводство и документооборот:','Подразделение: '+valueOrBlank(v,'unit1')+'; ответственное лицо: '+valueOrBlank(v,'person1')+(fieldValue(v,'unit2')||fieldValue(v,'person2')?'':'') ,...(fieldValue(v,'unit2')||fieldValue(v,'person2')?['Подразделение: '+valueOrBlank(v,'unit2')+'; ответственное лицо: '+valueOrBlank(v,'person2')]:[]),'2. Ответственным лицам обеспечить прием, регистрацию, передачу и учет документов, контроль сроков исполнения, формирование дел и подготовку документов к архивному хранению.','3. Руководителям подразделений обеспечивать замещение ответственных лиц на период отсутствия и своевременно сообщать об изменениях.','4. Методическое сопровождение и координацию работы ответственных лиц возложить на '+valueOrBlank(v,'coordinator')+'.','5. Контроль за исполнением настоящего приказа возложить на ________________________.'];
+ } else if(t.id==='regulation'){
+  title='Об утверждении и введении в действие '+valueOrBlank(v,'documentName');pre='В целях '+valueOrBlank(v,'purpose')+',';
+  body=['1. Утвердить '+valueOrBlank(v,'documentName')+' согласно приложению к настоящему приказу.','2. Ввести указанный документ в действие с '+valueOrBlank(v,'effectiveDate')+'.','3. '+valueOrBlank(v,'responsibleUnit')+' обеспечить ознакомление работников, деятельность которых регулируется документом, и размещение актуальной редакции документа '+valueOrBlank(v,'resource')+'.','4. Контроль за исполнением настоящего приказа '+valueOrBlank(v,'control')+'.'];
+ } else if(t.id==='handover'){
+  title='О приёме и передаче дел и имущества';pre='В связи с '+valueOrBlank(v,'reason')+',';
+  body=['1. '+valueOrBlank(v,'handing')+' сдать, а '+valueOrBlank(v,'receiving')+' принять дела и имущество: '+valueOrBlank(v,'items')+'. Срок приёма и передачи — '+valueOrBlank(v,'deadline')+'.','2. Назначить '+valueOrBlank(v,'representative')+' представителем Организации при приёме и передаче дел и имущества.','3. Оформить акт приёма-передачи и представить его в установленном порядке.','4. Контроль за исполнением настоящего приказа возложить на ________________________.'];
+ } else if(t.id==='system'){
+  title='О вводе в эксплуатацию '+valueOrBlank(v,'systemName');pre='На основании '+valueOrBlank(v,'readiness')+', содержащего решение о готовности к вводу в эксплуатацию компонента информационной системы «'+valueOrBlank(v,'systemName')+'», разработанного в соответствии с '+valueOrBlank(v,'specification')+',';
+  body=['1. Ввести «'+valueOrBlank(v,'shortName')+'» в эксплуатацию с '+valueOrBlank(v,'effectiveDate')+'.','2. '+valueOrBlank(v,'owner')+' обеспечить применение «'+valueOrBlank(v,'shortName')+'» по назначению: '+valueOrBlank(v,'purpose')+'.','3. Департаменту информационных технологий обеспечить функционирование «'+valueOrBlank(v,'shortName')+'» в соответствии с эксплуатационной документацией и организовать сопровождение компонента.','4. Ответственным за исполнение настоящего приказа является ________________________.'];
+ } else {
+  action='ОБЯЗЫВАЮ:';title='О создании рабочей группы по '+valueOrBlank(v,'subject');pre='В целях '+valueOrBlank(v,'goal')+',';
+  body=['1. Создать рабочую группу по '+valueOrBlank(v,'subject')+' в составе:','Руководитель — '+valueOrBlank(v,'leader'),'Секретарь — '+valueOrBlank(v,'secretary'),'Члены рабочей группы — '+valueOrBlank(v,'members'),'2. Рабочей группе до '+valueOrBlank(v,'deadline')+' выполнить поставленную задачу и представить '+valueOrBlank(v,'result')+'.','3. Руководителю рабочей группы организовать работу, распределить задачи и обеспечить соблюдение установленного срока.','4. Секретарю рабочей группы оформлять результаты заседаний и обеспечивать хранение рабочих материалов.','5. Рабочая группа прекращает деятельность после представления результата.','6. Контроль за исполнением настоящего распоряжения возложить на ________________________.'];
+ }
+ const lines=[{text:org,style:'org'},{text:kind,style:'type'},{text:date+'   № '+no,style:'meta'},{text:'г. Москва',style:'city'},{text:'',style:'blank'},{text:title,style:'title'},{text:'',style:'blank'},{text:pre,style:'body'},{text:'',style:'blank'},{text:action,style:'action'},...body.map(text=>({text,style:/^(Руководитель|Аудиторы|Секретарь|Члены рабочей группы|Подразделение):?/.test(text)?'sub':'body'})),{text:'',style:'blank'},{text:meta.signerRole||'________________________',style:'signature-role'},{text:'______________     '+((meta.signer||'').trim()||'И. О. Фамилия'),style:'signature'}];
+ return lines;
+}
+function xmlEscape(x){return String(x??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;')}
+function makeDocx(lines,fileName){
+ const paras=lines.map(line=>{const center=['org','type','meta','city','title','action'].includes(line.style);const bold=['org','type','title','action'].includes(line.style);const size=line.style==='org'?28:line.style==='type'?30:line.style==='title'?28:line.style==='action'?26:24;const text=line.text===''?' ':line.text;return `<w:p><w:pPr>${center?'<w:jc w:val="center"/>':''}<w:spacing w:after="120" w:line="360" w:lineRule="auto"/></w:pPr><w:r><w:rPr>${bold?'<w:b/>':''}<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:eastAsia="Times New Roman"/><w:sz w:val="${size}"/></w:rPr><w:t xml:space="preserve">${xmlEscape(text)}</w:t></w:r></w:p>`}).join('');
+ const documentXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${paras}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1701" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>`;
+ const files=[
+  ['[Content_Types].xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>'],
+  ['_rels/.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'],
+  ['word/document.xml',documentXml],
+  ['word/styles.xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="28"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="120" w:line="360" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults></w:styles>']
+ ];
+ const blob=new Blob([zipStore(files)],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});downloadBlob(blob,fileName+'.docx');showToast('Документ Word сформирован');
+}
+function zipStore(files){const enc=new TextEncoder();const crcTable=zipStore.crc||(zipStore.crc=(()=>{const a=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xedb88320^(c>>>1)):(c>>>1);a[n]=c>>>0}return a})());function crc32(bytes){let c=0xffffffff;for(const b of bytes)c=crcTable[(c^b)&255]^(c>>>8);return (c^0xffffffff)>>>0}function le(size,fn){const b=new Uint8Array(size),v=new DataView(b.buffer);fn(v);return b}function join(parts){let n=parts.reduce((a,b)=>a+b.length,0),o=new Uint8Array(n),i=0;for(const p of parts){o.set(p,i);i+=p.length}return o}const locals=[],centrals=[];let offset=0;for(const [name,content] of files){const n=enc.encode(name),d=enc.encode(content),crc=crc32(d);const lh=le(30,v=>{v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(6,0x0800,true);v.setUint16(8,0,true);v.setUint16(10,0,true);v.setUint16(12,0x0021,true);v.setUint32(14,crc,true);v.setUint32(18,d.length,true);v.setUint32(22,d.length,true);v.setUint16(26,n.length,true);v.setUint16(28,0,true)});locals.push(lh,n,d);const ch=le(46,v=>{v.setUint32(0,0x02014b50,true);v.setUint16(4,20,true);v.setUint16(6,20,true);v.setUint16(8,0x0800,true);v.setUint16(10,0,true);v.setUint16(12,0,true);v.setUint16(14,0x0021,true);v.setUint32(16,crc,true);v.setUint32(20,d.length,true);v.setUint32(24,d.length,true);v.setUint16(28,n.length,true);v.setUint16(30,0,true);v.setUint16(32,0,true);v.setUint16(34,0,true);v.setUint16(36,0,true);v.setUint32(38,0,true);v.setUint32(42,offset,true)});centrals.push(ch,n);offset+=lh.length+n.length+d.length}const central=join(centrals),localsAll=join(locals),end=le(22,v=>{v.setUint32(0,0x06054b50,true);v.setUint16(4,0,true);v.setUint16(6,0,true);v.setUint16(8,files.length,true);v.setUint16(10,files.length,true);v.setUint32(12,central.length,true);v.setUint32(16,localsAll.length,true);v.setUint16(20,0,true)});return join([localsAll,central,end])}
+function downloadBlob(blob,filename){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function makePdf(lines,fileName){
+ const width=1240,height=1754,marginX=150,marginTop=145,marginBottom=135,lineH=42;const pages=[];let current=[];let canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;let ctx=canvas.getContext('2d');ctx.font='30px "Times New Roman", serif';const maxW=width-marginX*2;
+ for(const item of lines){if(item.style==='blank'){current.push({text:'',style:'blank'});continue;}ctx.font=(['org','type','title','action'].includes(item.style)?'bold ':'')+(item.style==='org'?'28px':item.style==='type'?'34px':item.style==='title'?'30px':'28px')+' "Times New Roman", serif';const words=String(item.text).split(/\s+/);let line='';for(const word of words){const test=line?line+' '+word:word;if(ctx.measureText(test).width>maxW&&line){current.push({text:line,style:item.style});line=word;}else line=test;}if(line)current.push({text:line,style:item.style});if(current.length*lineH>height-marginTop-marginBottom){pages.push(current);current=[];}}
+ if(current.length||!pages.length)pages.push(current);const images=[];for(const content of pages){const c=document.createElement('canvas');c.width=width;c.height=height;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,width,height);let y=marginTop;x.fillStyle='#172b45';for(const item of content){if(item.style==='blank'){y+=lineH*.45;continue;}const isBold=['org','type','title','action'].includes(item.style);const size=item.style==='org'?29:item.style==='type'?34:item.style==='title'?29:28;x.font=(isBold?'bold ':'')+size+'px "Times New Roman", serif';x.textBaseline='top';if(['org','type','meta','city','title','action'].includes(item.style))x.textAlign='center';else x.textAlign='left';let out=item.text;if(x.measureText(out).width>maxW){const words=out.split(/\s+/);let ln='';const arr=[];for(const w of words){const t=ln?ln+' '+w:w;if(x.measureText(t).width>maxW&&ln){arr.push(ln);ln=w}else ln=t}if(ln)arr.push(ln);for(const a of arr){x.fillText(a,item.style==='org'||item.style==='type'||item.style==='title'?width/2:marginX,y);y+=lineH*.85}}else{x.fillText(out,['org','type','meta','city','title','action'].includes(item.style)?width/2:marginX,y);y+=lineH}if(y>height-marginBottom)break;}const data=c.toDataURL('image/jpeg',0.9).split(',')[1];images.push(Uint8Array.from(atob(data),ch=>ch.charCodeAt(0)));}
+ const enc=new TextEncoder();const parts=[];let offset=0;const offsets=[0];function pushBytes(b){parts.push(b);offset+=b.length}function pushText(t){pushBytes(enc.encode(t))}function addObj(id,bodyBytes){offsets[id]=offset;pushText(id+' 0 obj\n');pushBytes(bodyBytes);pushText('\nendobj\n')}function concat(arr){let n=arr.reduce((a,b)=>a+b.length,0),r=new Uint8Array(n),i=0;for(const b of arr){r.set(b,i);i+=b.length}return r}
+ pushText('%PDF-1.4\n%âãÏÓ\n');addObj(1,enc.encode('<< /Type /Catalog /Pages 2 0 R >>'));const kids=images.map((_,i)=>(3+i*3)+' 0 R').join(' ');addObj(2,enc.encode(`<< /Type /Pages /Kids [${kids}] /Count ${images.length} >>`));
+ images.forEach((img,i)=>{const pageId=3+i*3,contentId=pageId+1,imageId=pageId+2;addObj(pageId,enc.encode(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /XObject << /Im0 ${imageId} 0 R >> >> /Contents ${contentId} 0 R >>`));const stream=enc.encode('q\n595 0 0 842 0 0 cm\n/Im0 Do\nQ');addObj(contentId,concat([enc.encode(`<< /Length ${stream.length} >>
+stream
+`),stream,enc.encode('\nendstream')]));addObj(imageId,concat([enc.encode(`<< /Type /XObject /Subtype /Image /Width ${width} /Height ${height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${img.length} >>
+stream
+`),img,enc.encode('\nendstream') ]));});
+ const xrefStart=offset;pushText('xref\n0 '+(offsets.length)+'\n0000000000 65535 f \n');for(let i=1;i<offsets.length;i++)pushText(String(offsets[i]).padStart(10,'0')+' 00000 n \n');pushText(`trailer\n<< /Size ${offsets.length} /Root 1 0 R >>\nstartxref\n${xrefStart}\n%%EOF`);downloadBlob(new Blob([concat(parts)],{type:'application/pdf'}),fileName+'.pdf');showToast('Документ PDF сформирован');
+}
+function openOfficialExport(){if(!currentDraft)return;openModal('Оформить документ','',`<form id="officialMetaForm" class="export-form"><div class="field"><label for="orgName">Наименование организации</label><input id="orgName" value="НАИМЕНОВАНИЕ ОРГАНИЗАЦИИ" required></div><div class="field"><label for="docDate">Дата</label><input id="docDate" placeholder="ДД.ММ.ГГГГ"></div><div class="field"><label for="docNumber">Регистрационный номер</label><input id="docNumber" placeholder="Номер"></div><div class="field"><label for="signerRole">Должность подписанта</label><input id="signerRole" placeholder="Должность"></div><div class="field"><label for="signerName">Инициалы и фамилия</label><input id="signerName" placeholder="И. О. Фамилия"></div><div class="field"><label for="exportFormat">Формат файла</label><select id="exportFormat"><option value="docx">Word (.docx)</option><option value="pdf">PDF (.pdf)</option></select></div></form>`, 'Скачать документ', ()=>{const t=templates.find(x=>x.id===currentDraft.templateId);const meta={organization:document.getElementById('orgName').value,date:document.getElementById('docDate').value,regNo:document.getElementById('docNumber').value,signerRole:document.getElementById('signerRole').value,signer:document.getElementById('signerName').value};const lines=buildOfficialLines(t,currentDraft.values,meta);const base=(t.id+'_'+(meta.regNo||'document')).replace(/[^a-zA-Z0-9А-Яа-я_-]+/g,'_');const format=document.getElementById('exportFormat')?.value||'docx';document.getElementById('modalRoot').innerHTML='';if(format==='pdf')makePdf(lines,base);else makeDocx(lines,base)});}
+function onTemplateSubmit(e){e.preventDefault();const t=templates.find(x=>x.id===selectedTemplate);const fd=new FormData(e.currentTarget);const values={};t.fields.forEach(([key])=>values[key]=fd.get(key)||'');const missing=t.fields.filter(([key,label,placeholder,required])=>required&&!String(values[key]||'').trim());if(missing.length){showToast('Заполните: '+missing.map(x=>x[1]).slice(0,3).join(', '));return;}currentDraft={templateId:t.id,title:t.short,text:buildDraft(t,values),values};addHistory({type:'create',title:t.name,sub:'Создан документ',templateId:t.id});const result=document.getElementById('draftResult');result.innerHTML=`<div class="result-card"><div class="result-head"><h3>Черновик создан</h3><button class="button-primary" id="formatDocumentBtn">${icon('file')} Оформить документ</button></div><div class="result-content">${esc(currentDraft.text)}</div><div class="form-actions"><button class="button-secondary" id="copyDraftBtn">${icon('clipboard')} Копировать текст</button></div></div>`;result.scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('copyDraftBtn').addEventListener('click',()=>copyText(currentDraft.text));document.getElementById('formatDocumentBtn').addEventListener('click',openOfficialExport);showToast('Черновик создан');}
+function copyText(s){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(s).then(()=>showToast('Текст скопирован')).catch(()=>fallbackCopy(s));else fallbackCopy(s)}function fallbackCopy(s){const x=document.createElement('textarea');x.value=s;document.body.appendChild(x);x.select();try{document.execCommand('copy');showToast('Текст скопирован')}catch(e){showToast('Не удалось скопировать автоматически')}x.remove()}
+function selectFile(file){if(!file)return;attachedFile=file;checkedDocumentText='';const area=document.getElementById('selectedFile');if(area)area.innerHTML=`<div class="file-pill"><div class="doc-icon">${icon('file')}</div><div><strong>${esc(file.name)}</strong></div><button id="removeFileBtn" title="Удалить файл">${icon('close')}</button></div>`;const btn=document.getElementById('runCheckBtn');if(btn){btn.disabled=false;btn.style.opacity='1'}const rm=document.getElementById('removeFileBtn');if(rm)rm.addEventListener('click',()=>{attachedFile=null;checkedDocumentText='';const area=document.getElementById('selectedFile');if(area)area.innerHTML='';const i=document.getElementById('fileInput');if(i)i.value='';const b=document.getElementById('runCheckBtn');if(b){b.disabled=true;b.style.opacity='.55'}document.getElementById('checkResults').innerHTML='';checkResult=false});showToast('Файл добавлен')}
+async function runCheck(){
+ const results=document.getElementById('checkResults');
+ if(attachedFile){
+  results.innerHTML='<div class="page-panel"><p>Проверяю документ на сервере VisariumAI…</p></div>';
+  try{
+   const fd=new FormData();fd.append('file',attachedFile);
+   const response=await fetch('/api/check',{method:'POST',body:fd});const data=await response.json();
+   if(!response.ok)throw new Error(data.error||'Не удалось проверить файл');
+   results.innerHTML='<div class="page-panel"><h2>Результаты предварительной проверки</h2><p><b>'+esc(data.filename||attachedFile.name)+'</b></p><div class="check-result-list">'+data.checks.map(c=>'<div class="check-result-item"><b>'+esc(c.status)+'</b><h3>'+esc(c.title)+'</h3><p>'+esc(c.detail)+'</p></div>').join('')+'</div><p class="muted">'+esc(data.note||'Проверка носит предварительный характер.')+'</p></div>';
+   checkResult=true;addHistory({type:'check',title:'Проверка файла: '+attachedFile.name,sub:'Предварительная проверка'});showToast('Предварительная проверка завершена');
+  }catch(err){results.innerHTML='<div class="page-panel"><p>'+esc(err.message||'Ошибка проверки')+'</p></div>';showToast('Не удалось проверить документ')}
+  results.scrollIntoView({behavior:'smooth',block:'start'});return;
+ }
+ checkResult=true;results.innerHTML=renderCheckResults();bindCheckResultActions();addHistory({type:'check',title:'Пример проверки проекта',sub:'Демонстрационный пример'});results.scrollIntoView({behavior:'smooth',block:'start'});showToast('Демонстрационная проверка завершена');
+}
+function checkedDocumentSeed(){
+ if(checkedDocumentText) return checkedDocumentText;
+ return 'ПРИКАЗ\n\nОб утверждении документа\n\nВ целях обеспечения установленного порядка документооборота ПРИКАЗЫВАЮ:\n\n1. Утвердить соответствующие положения документа.\n2. Ответственным исполнителям обеспечить выполнение установленных требований.\n3. Контроль исполнения возложить на ____________________.';
+}
+function linesFromEditedText(text){
+ return String(text??'').replace(/\r/g,'').split('\n').map(line=>{
+  const value=line.trim(); let style='body';
+  if(!value) style='blank';
+  else if(/^(ПРИКАЗ|РАСПОРЯЖЕНИЕ|ПРИКАЗЫВАЮ:|ОБЯЗЫВАЮ:)$/.test(value)) style='type';
+  else if(/^Об /.test(value)) style='title';
+  return {text:line,style};
+ });
+}
+async function extractDocxText(file){
+ const buffer=await file.arrayBuffer(), bytes=new Uint8Array(buffer), view=new DataView(buffer);
+ let eocd=-1; const min=Math.max(0,bytes.length-65557);
+ for(let p=bytes.length-22;p>=min;p--){if(view.getUint32(p,true)===0x06054b50){eocd=p;break;}}
+ if(eocd<0) throw new Error('Не удалось прочитать структуру DOCX');
+ const count=view.getUint16(eocd+10,true), cdOffset=view.getUint32(eocd+16,true); let p=cdOffset, entry=null;
+ for(let i=0;i<count && p+46<=bytes.length;i++){
+  if(view.getUint32(p,true)!==0x02014b50) break;
+  const method=view.getUint16(p+10,true), compSize=view.getUint32(p+20,true), uncompSize=view.getUint32(p+24,true);
+  const nameLen=view.getUint16(p+28,true), extraLen=view.getUint16(p+30,true), commentLen=view.getUint16(p+32,true), localOffset=view.getUint32(p+42,true);
+  const name=new TextDecoder().decode(bytes.slice(p+46,p+46+nameLen));
+  if(name==='word/document.xml'){entry={method,compSize,uncompSize,localOffset};break;}
+  p+=46+nameLen+extraLen+commentLen;
+ }
+ if(!entry) throw new Error('В DOCX не найден основной текст документа');
+ const lo=entry.localOffset, localNameLen=view.getUint16(lo+26,true), localExtraLen=view.getUint16(lo+28,true), dataStart=lo+30+localNameLen+localExtraLen;
+ const payload=bytes.slice(dataStart,dataStart+entry.compSize); let xmlBytes;
+ if(entry.method===0) xmlBytes=payload;
+ else if(entry.method===8){
+  if(typeof DecompressionStream==='undefined') throw new Error('Этот браузер не поддерживает распаковку DOCX');
+  const stream=new Blob([payload]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+  xmlBytes=new Uint8Array(await new Response(stream).arrayBuffer());
+ }else throw new Error('Не поддерживается способ сжатия DOCX');
+ const xml=new DOMParser().parseFromString(new TextDecoder('utf-8').decode(xmlBytes),'application/xml');
+ if(xml.querySelector('parsererror')) throw new Error('Не удалось прочитать XML документа');
+ const ns='http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+ const paragraphs=Array.from(xml.getElementsByTagNameNS(ns,'p')).map(par=>{
+  let text='';
+  for(const node of Array.from(par.getElementsByTagNameNS(ns,'t'))) text+=node.textContent||'';
+  const tabs=Array.from(par.getElementsByTagNameNS(ns,'tab')).length;
+  if(tabs) text=text+'\t'.repeat(tabs);
+  return text;
+ });
+ const extracted=paragraphs.join('\n').trim();
+ if(!extracted) throw new Error('В документе не найден текст');
+ return extracted;
+}
+function loadPdfJs(){
+ if(window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+ if(window._cdobrPdfJsPromise) return window._cdobrPdfJsPromise;
+ window._cdobrPdfJsPromise=new Promise((resolve,reject)=>{
+  const script=document.createElement('script');script.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';script.async=true;
+  script.onload=()=>window.pdfjsLib?resolve(window.pdfjsLib):reject(new Error('PDF.js не загрузился'));
+  script.onerror=()=>reject(new Error('Не удалось загрузить модуль чтения PDF. Проверьте подключение к интернету.'));
+  document.head.appendChild(script);
+ });
+ return window._cdobrPdfJsPromise;
+}
+async function extractPdfText(file){
+ const pdfjs=await loadPdfJs();pdfjs.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+ const pdf=await pdfjs.getDocument({data:new Uint8Array(await file.arrayBuffer()),disableWorker:true}).promise;
+ const pages=[];
+ for(let pageNo=1;pageNo<=pdf.numPages;pageNo++){
+  const page=await pdf.getPage(pageNo), content=await page.getTextContent(), rows=new Map();
+  for(const item of content.items){if(!item.str)continue;const y=Math.round(item.transform?.[5]||0);if(!rows.has(y))rows.set(y,[]);rows.get(y).push(item.str)}
+  const lines=Array.from(rows.entries()).sort((a,b)=>b[0]-a[0]).map(([y,parts])=>parts.join(' ').replace(/\s+/g,' ').trim()).filter(Boolean);
+  pages.push(lines.join('\n'));
+ }
+ const result=pages.join('\n\n').trim();if(!result)throw new Error('В PDF не удалось найти текстовый слой. Возможно, документ состоит из сканов.');return result;
+}
+async function extractUploadedDocumentText(file){
+ const name=(file?.name||'').toLowerCase();
+ if(name.endsWith('.docx'))return extractDocxText(file);
+ if(name.endsWith('.pdf'))return extractPdfText(file);
+ if(name.endsWith('.txt'))return file.text();
+ throw new Error('Поддерживаются документы Word (.docx) и PDF (.pdf).');
+}
+async function openCheckedDocumentEditor(){
+ const root=document.getElementById('checkResults'); if(!root)return;
+ const existing=document.getElementById('checkedEditor');
+ if(existing){existing.scrollIntoView({behavior:'smooth',block:'start'});const ta=document.getElementById('checkedDocumentText');if(ta)ta.focus();else showToast('Подготавливаем содержимое документа');return;}
+ root.insertAdjacentHTML('beforeend',`<div class="result-card checked-editor-card" id="checkedEditor"><div class="result-head"><h3>Редактирование документа</h3><span class="soft-badge" id="checkedEditorStatus">Подготовка</span></div><div class="editor-loading" id="checkedEditorLoading">Подготавливаем содержимое документа…</div></div>`);
+ const card=document.getElementById('checkedEditor');card.scrollIntoView({behavior:'smooth',block:'start'});
+ let original='', extractionError='';
+ if(attachedFile){
+  try{original=await extractUploadedDocumentText(attachedFile);}
+  catch(error){extractionError=error?.message||'Не удалось автоматически извлечь текст документа.';original=checkedDocumentText||'';}
+ }else original=checkedDocumentSeed();
+ const liveCard=document.getElementById('checkedEditor');if(!liveCard)return;
+ checkedDocumentText=original;
+ liveCard.innerHTML=`<div class="result-head"><h3>Редактирование документа</h3><button class="button-primary" id="saveCheckedEditBtn">Сохранить</button></div>${attachedFile?`<div class="edited-file-name">${icon('file')} ${esc(attachedFile.name)}</div>`:''}${extractionError?`<div class="editor-extract-hint">${icon('info')} ${esc(extractionError)} ${original?'Можно продолжить редактирование извлечённого текста.':'Вставьте текст документа в поле ниже, чтобы отредактировать его и сохранить в Word или PDF.'}</div>`:''}<textarea class="document-editor" id="checkedDocumentText" aria-label="Текст редактируемого документа" spellcheck="true" placeholder="Текст документа для редактирования…">${esc(original)}</textarea><div class="editor-save-status" id="editorSaveStatus" aria-live="polite"></div><div class="form-actions"><button class="button-secondary" id="downloadEditedDocxBtn">${icon('download')} Скачать Word</button><button class="button-secondary" id="downloadEditedPdfBtn">${icon('download')} Скачать PDF</button></div>`;
+ const textarea=document.getElementById('checkedDocumentText'), save=document.getElementById('saveCheckedEditBtn'), saveStatus=document.getElementById('editorSaveStatus');
+ const syncText=()=>{checkedDocumentText=textarea.value;save.textContent='Сохранить';save.classList.remove('is-saved');if(saveStatus)saveStatus.textContent='Есть несохранённые изменения';};
+ textarea.addEventListener('input',()=>{syncText();existingEditorAutosize(textarea)});
+ save.addEventListener('click',()=>{checkedDocumentText=textarea.value;save.textContent='Сохранено';save.classList.add('is-saved');if(saveStatus)saveStatus.textContent='Изменения сохранены в текущем сеансе';showToast('Изменения сохранены')});
+ document.getElementById('downloadEditedDocxBtn').addEventListener('click',()=>{checkedDocumentText=textarea.value;if(!checkedDocumentText.trim())return showToast('Добавьте текст документа перед экспортом');makeDocx(linesFromEditedText(checkedDocumentText),safeDownloadName(attachedFile?.name||'Документ'))});
+ document.getElementById('downloadEditedPdfBtn').addEventListener('click',()=>{checkedDocumentText=textarea.value;if(!checkedDocumentText.trim())return showToast('Добавьте текст документа перед экспортом');makePdf(linesFromEditedText(checkedDocumentText),safeDownloadName(attachedFile?.name||'Документ'))});
+ existingEditorAutosize(textarea);textarea.focus();
+}
+function existingEditorAutosize(textarea){
+ if(!textarea)return;
+ const resize=()=>{textarea.style.height='auto';textarea.style.height=Math.max(330,textarea.scrollHeight)+'px'};
+ textarea.addEventListener('input',resize);resize();
+}
+function safeDownloadName(name){
+ return String(name||'Документ').replace(/\.(docx?|pdf)$/i,'').replace(/[\\/:*?"<>|]+/g,'_').trim()||'Документ';
+}
+function bindCheckResultActions(){
+ const editButton=document.getElementById('editCheckedDocumentBtn');
+ if(editButton&&!editButton.dataset.bound){editButton.dataset.bound='true';editButton.addEventListener('click',openCheckedDocumentEditor)}
+}
+function openModal(title,desc,body,actionLabel='Понятно',onAction=null){const root=document.getElementById('modalRoot');root.innerHTML=`<div class="modal-backdrop" id="modalBackdrop"><div class="modal" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="modal-top"><span class="quick-icon">${icon('file')}</span><div><h2>${esc(title)}</h2><p>${esc(desc)}</p></div><button class="modal-close" id="modalClose" aria-label="Закрыть">${icon('close')}</button></div><div class="modal-content">${body}</div><div class="modal-actions"><button class="button-secondary" id="modalClose2">Закрыть</button><button class="button-primary" id="modalAction">${esc(actionLabel)}</button></div></div></div>`;const close=()=>root.innerHTML='';document.getElementById('modalClose').onclick=close;document.getElementById('modalClose2').onclick=close;document.getElementById('modalBackdrop').addEventListener('click',e=>{if(e.target.id==='modalBackdrop')close()});document.getElementById('modalAction').onclick=()=>{if(onAction)onAction();else close()};document.addEventListener('keydown',function escModal(e){if(e.key==='Escape'){close();document.removeEventListener('keydown',escModal)}})}
+function wireDynamic(){document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{const p=b.dataset.go;if(p==='create')selectedTemplate=null;goTo(p)}));document.querySelectorAll('[data-template]').forEach(b=>b.addEventListener('click',()=>{selectedTemplate=b.dataset.template;currentPage='create';document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page==='create'));renderPage()}));document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>sendChat(b.dataset.prompt)));document.querySelectorAll('[data-copy-message]').forEach(b=>b.addEventListener('click',()=>copyText(b.dataset.copyMessage)));document.querySelectorAll('[data-source]').forEach(b=>b.addEventListener('click',()=>{const source=sources[Number(b.dataset.source)];if(!source)return;openModal(source.name,'',`<p>${esc(source.desc)}</p>`,'Найти требования',()=>{document.getElementById('modalRoot').innerHTML='';setPage('chat');const input=document.getElementById('chatInput');if(input){input.value='Что установлено в документе «'+source.name+'»?';input.focus()}})}));
+ document.querySelectorAll('[data-preview-citation]').forEach(b=>b.addEventListener('click',()=>{const label=b.dataset.previewCitation||'';const src=sources.find(x=>label.toLowerCase().includes(x.name.toLowerCase())||x.name.toLowerCase().includes(label.split(' · ')[0].toLowerCase()))||sources.find(x=>label.toLowerCase().includes('матриц')&&x.name.toLowerCase().includes('матрица'))||sources.find(x=>label.toLowerCase().includes('инструкц')&&x.name.toLowerCase().includes('инструкц'));openModal('Предварительный просмотр документа','',`<div class="document-preview"><h2 style="font-family:inherit;margin-top:0">${esc(src?src.name:label)}</h2><p>${esc(src?src.desc:'Документ из базы знаний. Откройте источник в разделе «База знаний», чтобы посмотреть доступные сведения.')}</p><p><b>Источник:</b> ${esc(label)}</p></div>`,'Открыть в базе знаний',()=>{document.getElementById('modalRoot').innerHTML='';setPage('knowledge')} )}));
+ const addSection=document.getElementById('addKnowledgeSectionBtn');if(addSection)addSection.addEventListener('click',()=>{const input=document.getElementById('newKnowledgeSection');const name=(input.value||'').trim();if(!name)return showToast('Введите название раздела');if(!customKnowledgeSections.includes(name))customKnowledgeSections.push(name);renderPage();showToast('Раздел добавлен')});
+ document.querySelectorAll('[data-edit-source]').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.editSource),src=sources[i];if(!src)return;const cats=[...new Set([...sources.map(sourceCategory),...customKnowledgeSections])];openModal('Редактировать файл','Изменение карточки файла в базе знаний',`<div class="form-fields"><div class="field full"><label for="editSourceName">Название</label><input id="editSourceName" value="${esc(src.name)}"></div><div class="field full"><label for="editSourceDesc">Описание</label><textarea id="editSourceDesc">${esc(src.desc||'')}</textarea></div><div class="field full"><label for="editSourceCategory">Раздел</label><select id="editSourceCategory">${cats.map(c=>`<option ${sourceCategory(src)===c?'selected':''}>${esc(c)}</option>`).join('')}</select></div><div class="field full"><label for="editSourceStatus">Статус</label><select id="editSourceStatus"><option ${src.status==='Неактуален'?'selected':''}>Неактуален</option><option ${src.status!=='Неактуален'?'selected':''}>Актуальность не подтверждена</option><option ${src.status==='Вступает в силу 01.11.2026'?'selected':''}>Вступает в силу 01.11.2026</option></select></div></div>`,'Сохранить',()=>{src.name=document.getElementById('editSourceName').value.trim()||src.name;src.desc=document.getElementById('editSourceDesc').value;src.category=document.getElementById('editSourceCategory').value;src.sub=src.category;src.status=document.getElementById('editSourceStatus').value;src.key=src.name.toLowerCase();document.getElementById('modalRoot').innerHTML='';renderPage();showToast('Карточка файла обновлена')} )}));
+ const chatForm=document.getElementById('chatForm');if(chatForm){const input=document.getElementById('chatInput');const composer=chatForm.closest('.chat-composer');const fitInput=()=>{if(!input||!composer)return;composer.classList.toggle('is-typing',input.value.trim().length>0);input.style.setProperty('height','auto','important');input.style.setProperty('height',Math.max(45,input.scrollHeight)+'px','important');input.style.setProperty('overflow-y','hidden','important')};if(input){input.addEventListener('input',fitInput);input.addEventListener('focus',()=>{if(composer)composer.classList.add('is-typing')});input.addEventListener('blur',()=>{if(!input.value.trim()&&composer)composer.classList.remove('is-typing')});fitInput()}chatForm.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';input.style.setProperty('height','45px','important');if(composer)composer.classList.remove('is-typing');sendChat(q)})}
+ const tf=document.getElementById('templateForm');if(tf)tf.addEventListener('submit',onTemplateSubmit);
+ const fileInput=document.getElementById('fileInput');if(fileInput)fileInput.addEventListener('change',e=>selectFile(e.target.files[0]));const browse=document.getElementById('browseFileBtn');if(browse&&fileInput)browse.addEventListener('click',()=>fileInput.click());const drop=document.getElementById('dropzone');if(drop){drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('dragover')});drop.addEventListener('dragleave',()=>drop.classList.remove('dragover'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('dragover');selectFile(e.dataTransfer.files[0])})}const run=document.getElementById('runCheckBtn');if(run)run.addEventListener('click',runCheck);const example=document.getElementById('exampleCheckBtn');if(example)example.addEventListener('click',runCheck);
+ const ss=document.getElementById('sourceSearch');if(ss)ss.addEventListener('input',()=>{const term=ss.value.toLowerCase();document.getElementById('sourceGrid').innerHTML=renderSourceGroups(sources.filter(s=>(s.name+' '+s.desc+' '+s.sub+' '+s.key+' '+sourceCategory(s)).toLowerCase().includes(term)),term.length>0);wireSourceOpenOnly()});
+ const clear=document.getElementById('clearHistoryBtn');if(clear)clear.addEventListener('click',()=>openModal('Очистить историю','', '<p>Вы уверены, что хотите очистить историю? Это действие нельзя отменить.</p>', 'Очистить', ()=>{historyItems=[];document.getElementById('modalRoot').innerHTML='';renderPage();showToast('История очищена')}));document.querySelectorAll('[data-history]').forEach(b=>b.addEventListener('click',()=>{const h=historyItems[Number(b.dataset.history)];if(!h)return;if(h.type==='create'){selectedTemplate=h.templateId||null;setPage('create')}else if(h.type==='check'){setPage('check');setTimeout(()=>{const b=document.getElementById('exampleCheckBtn');if(b)b.click()},40)}else{setPage('chat');if(h.prompt){document.getElementById('chatInput').value=h.prompt;document.getElementById('chatInput').focus()}}}));
+ const af=document.getElementById('addSourceForm');if(af)af.addEventListener('submit',e=>{e.preventDefault();const file=document.getElementById('adminFile').files[0];if(!file)return;const cat=document.getElementById('adminCategory').value;const status=document.getElementById('adminStatus').value;sources.push({name:file.name,sub:cat,status,desc:'Источник добавлен администратором.',type:/\.pdf$/i.test(file.name)?'PDF':'DOCX',key:file.name.toLowerCase(),category:cat});renderPage();showToast('Источник добавлен')});document.querySelectorAll('[data-deactivate-source]').forEach(b=>b.addEventListener('click',()=>{const src=sources[Number(b.dataset.deactivateSource)];if(src){src.status='Неактуален';renderPage();showToast('Статус источника обновлён')}}));document.querySelectorAll('[data-action="back-templates"]').forEach(b=>b.addEventListener('click',()=>{selectedTemplate=null;renderPage()}));document.querySelectorAll('[data-action="open-knowledge"]').forEach(b=>b.addEventListener('click',()=>setPage('knowledge')));}
+function wireSourceOpenOnly(){document.querySelectorAll('[data-source]').forEach(b=>b.addEventListener('click',()=>{const source=sources[Number(b.dataset.source)];if(source)openModal(source.name,'',`<p>${esc(source.desc)}</p>`,'Найти требования',()=>{document.getElementById('modalRoot').innerHTML='';setPage('chat');const input=document.getElementById('chatInput');if(input){input.value='Что установлено в документе «'+source.name+'»?';input.focus()}})}))}
+function updateRoleUI(){const admin=currentRole==='admin';document.querySelectorAll('.admin-only').forEach(el=>el.hidden=!admin);document.querySelectorAll('.nav-item[data-page="admin"]').forEach(el=>el.setAttribute('aria-hidden',String(!admin)));const name=document.getElementById('profileName'),role=document.getElementById('profileRole'),avatar=document.querySelector('.profile .avatar');if(name)name.textContent=admin?'Администратор':'Пользователь';if(role)role.textContent=admin?'Администратор базы знаний':'Стандартный доступ';if(avatar)avatar.textContent=admin?'АД':'П';const btn=document.getElementById('profileInfo');if(btn)btn.title=admin?'Администратор базы знаний':'Роль и доступ'}
+document.querySelectorAll('.nav-item').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.page==='create')selectedTemplate=null;setPage(b.dataset.page)}));document.getElementById('themeToggle').addEventListener('click',()=>{setTheme(document.documentElement.dataset.theme==='light'?'dark':'light')});document.getElementById('newChatBtn').addEventListener('click',()=>{chatMessages=[];selectedTemplate=null;attachedFile=null;setPage('chat')});const sidebar=document.getElementById('sidebar');document.getElementById('sidebarToggle').addEventListener('click',()=>{sidebar.classList.toggle('collapsed');const b=document.getElementById('sidebarToggle');b.setAttribute('aria-label',sidebar.classList.contains('collapsed')?'Развернуть рабочее пространство':'Свернуть рабочее пространство');b.title=sidebar.classList.contains('collapsed')?'Рабочее пространство — развернуть':'Рабочее пространство — свернуть'});document.getElementById('mobileMenu').addEventListener('click',()=>sidebar.classList.toggle('open'));document.getElementById('profileInfo').addEventListener('click',()=>openModal('Роль','',`<div class="field"><label for="roleSelect">Роль</label><select id="roleSelect"><option value="user" ${currentRole==='user'?'selected':''}>Сотрудник / исполнитель</option><option value="admin" ${currentRole==='admin'?'selected':''}>Администратор базы знаний</option></select></div>`, 'Применить', ()=>{currentRole=document.getElementById('roleSelect').value;updateRoleUI();if(currentRole!=='admin'&&currentPage==='admin')currentPage='chat';document.getElementById('modalRoot').innerHTML='';renderPage();showToast(currentRole==='admin'?'Права администратора включены':'Права сотрудника включены')}));
+initTheme();updateRoleUI();renderPage();
+</script>
+</body></html>
